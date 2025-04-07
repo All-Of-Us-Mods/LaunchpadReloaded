@@ -1,7 +1,9 @@
 ﻿using MiraAPI.Modifiers;
+using MiraAPI.PluginLoading;
 
 namespace LaunchpadReloaded.Modifiers;
 
+[MiraIgnore]
 public class VendettaMarkModifier(byte vendettaPlayer) : BaseModifier
 {
     public override string ModifierName => "Vendetta";
