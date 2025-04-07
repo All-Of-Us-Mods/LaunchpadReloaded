@@ -1,5 +1,4 @@
 ﻿using System;
-using LaunchpadReloaded.Modifiers.Game;
 using LaunchpadReloaded.Modifiers.Game.Crewmate;
 using MiraAPI.GameOptions;
 using MiraAPI.GameOptions.Attributes;

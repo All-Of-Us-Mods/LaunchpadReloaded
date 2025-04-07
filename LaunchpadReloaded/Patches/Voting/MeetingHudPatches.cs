@@ -10,7 +10,6 @@ using MiraAPI.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using Helpers = LaunchpadReloaded.Utilities.Helpers;
 
 namespace LaunchpadReloaded.Patches.Voting;
 

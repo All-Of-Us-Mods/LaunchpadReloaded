@@ -12,7 +12,6 @@ using LaunchpadReloaded.Roles.Outcast;
 using LaunchpadReloaded.Utilities;
 using MiraAPI.Events;
 using MiraAPI.Events.Vanilla.Gameplay;
-using MiraAPI.Events.Vanilla.Map;
 using MiraAPI.Events.Vanilla.Meeting;
 using MiraAPI.Events.Vanilla.Usables;
 using MiraAPI.GameEnd;
@@ -20,7 +19,6 @@ using MiraAPI.GameOptions;
 using MiraAPI.Hud;
 using MiraAPI.Modifiers;
 using MiraAPI.Roles;
-using Type = Il2CppSystem.Type;
 
 namespace LaunchpadReloaded;
 

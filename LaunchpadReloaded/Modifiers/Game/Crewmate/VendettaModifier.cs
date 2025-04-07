@@ -8,7 +8,6 @@ using MiraAPI.Hud;
 using MiraAPI.Modifiers;
 using MiraAPI.Networking;
 using MiraAPI.Utilities;
-using Reactor.Utilities;
 
 namespace LaunchpadReloaded.Modifiers.Game.Crewmate;
 

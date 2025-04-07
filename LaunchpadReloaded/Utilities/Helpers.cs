@@ -1,8 +1,6 @@
 ﻿using LaunchpadReloaded.Modifiers;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using MiraAPI.Modifiers;
 using UnityEngine;
 using Random = System.Random;

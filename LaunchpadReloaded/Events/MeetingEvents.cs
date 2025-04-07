@@ -4,8 +4,6 @@ using LaunchpadReloaded.Modifiers;
 using LaunchpadReloaded.Modifiers.Game.Crewmate;
 using LaunchpadReloaded.Options;
 using LaunchpadReloaded.Options.Modifiers.Crewmate;
-using LaunchpadReloaded.Options.Roles.Crewmate;
-using LaunchpadReloaded.Roles.Crewmate;
 using LaunchpadReloaded.Utilities;
 using MiraAPI.Events;
 using MiraAPI.Events.Vanilla.Meeting;

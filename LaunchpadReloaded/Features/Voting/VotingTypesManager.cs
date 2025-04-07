@@ -1,5 +1,4 @@
 ﻿using LaunchpadReloaded.Options;
-using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
 using Reactor.Utilities.Extensions;
 using System;

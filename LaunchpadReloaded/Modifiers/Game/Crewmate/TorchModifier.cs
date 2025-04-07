@@ -1,7 +1,6 @@
 ﻿using LaunchpadReloaded.Options.Modifiers;
 using LaunchpadReloaded.Options.Modifiers.Crewmate;
 using MiraAPI.GameOptions;
-using MiraAPI.Utilities;
 
 namespace LaunchpadReloaded.Modifiers.Game.Crewmate;
 
