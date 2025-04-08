@@ -7,10 +7,12 @@ using MiraAPI.GameOptions;
 using MiraAPI.Hud;
 using MiraAPI.Modifiers;
 using MiraAPI.Networking;
+using MiraAPI.PluginLoading;
 using MiraAPI.Utilities;
 
 namespace LaunchpadReloaded.Modifiers.Game.Crewmate;
 
+[MiraIgnore]
 public sealed class VendettaModifier : LPModifier
 {
     public override string ModifierName => "Vendetta";
