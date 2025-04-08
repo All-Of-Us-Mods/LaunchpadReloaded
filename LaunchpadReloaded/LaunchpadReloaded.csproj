@@ -9,6 +9,7 @@
         <Nullable>enable</Nullable>
         <Configurations>Debug;Release</Configurations>
         <Platforms>AnyCPU;Android</Platforms>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'Android' ">
         <DefineConstants>TRACE;ANDROID</DefineConstants>
