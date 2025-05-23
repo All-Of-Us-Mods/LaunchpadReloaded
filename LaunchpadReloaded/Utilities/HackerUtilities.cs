@@ -73,9 +73,10 @@ public static class HackerUtilities
 
     public static bool IsSabotageConsole(this IUsable? usable)
     {
-        if (usable?.TryCast<Console>() is { } console)
+        if (usable != null && usable.TryCast<Console>())
         {
-            return console.FindTask(PlayerControl.LocalPlayer).TryCast<SabotageTask>();
+            var task = usable.Cast<Console>().FindTask(PlayerControl.LocalPlayer);
+            return task != null && task.TryCast<SabotageTask>();
         }
 
         return false;

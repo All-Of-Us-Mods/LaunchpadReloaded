@@ -10,16 +10,15 @@ public class CustomSetting
     public string Text { get; }
     public StringNames StringName { get; }
     public bool Enabled;
-    public bool Default;
     public Action<bool>? ChangedEvent = null;
 
     private GameObject? _buttonObject;
 
-    public CustomSetting(string name, bool defaultValue)
+    public CustomSetting(string name, bool value)
     {
         Text = name;
         StringName = CustomStringName.CreateAndRegister(name);
-        Enabled = Default = defaultValue;
+        Enabled = value;
 
         CustomSettingsManager.CustomSettings.Add(this);
     }

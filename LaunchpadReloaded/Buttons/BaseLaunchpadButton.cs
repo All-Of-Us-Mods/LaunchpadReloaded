@@ -9,13 +9,9 @@ namespace LaunchpadReloaded.Buttons;
 [MiraIgnore]
 public abstract class BaseLaunchpadButton : CustomActionButton
 {
-#if ANDROID
-    public override ButtonLocation Location => ButtonLocation.BottomRight;
-#else
     public override ButtonLocation Location => LaunchpadSettings.Instance?.ButtonLocation.Enabled == true
         ? ButtonLocation.BottomLeft
         : ButtonLocation.BottomRight;
-#endif
 
     public abstract bool TimerAffectedByPlayer { get; }
 
@@ -32,13 +28,7 @@ public abstract class BaseLaunchpadButton : CustomActionButton
 [MiraIgnore]
 public abstract class BaseLaunchpadButton<T> : CustomActionButton<T> where T : MonoBehaviour
 {
-#if ANDROID
     public override ButtonLocation Location => ButtonLocation.BottomRight;
-#else
-    public override ButtonLocation Location => LaunchpadSettings.Instance?.ButtonLocation.Enabled == true
-        ? ButtonLocation.BottomLeft
-        : ButtonLocation.BottomRight;
-#endif
 
     public abstract bool TimerAffectedByPlayer { get; }
 
