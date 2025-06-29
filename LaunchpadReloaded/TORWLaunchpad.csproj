@@ -18,7 +18,7 @@
     </PropertyGroup>
     
     <ItemGroup>
-        <PackageReference Include="AllOfUs.MiraAPI" Version="0.2.0-rc.7" />
+        <PackageReference Include="AllOfUs.MiraAPI" Version="0.2.0" />
         <PackageReference Include="Reactor" Version="2.3.1" />
         <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.735" Private="false" ExcludeAssets="runtime;native" />
         <PackageReference Condition="$(Platform)=='Android'" Include="AmongUs.GameLibs.Android" Version="2025.3.28" PrivateAssets="all" />
