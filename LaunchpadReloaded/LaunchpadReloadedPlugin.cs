@@ -11,6 +11,11 @@ using Reactor;
 using Reactor.Networking;
 using Reactor.Networking.Attributes;
 using Reactor.Utilities;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+using System.Linq;
 
 namespace LaunchpadReloaded;
 
@@ -22,6 +27,7 @@ namespace LaunchpadReloaded;
 public partial class LaunchpadReloadedPlugin : BasePlugin, IMiraPlugin
 {
     private Harmony Harmony { get; } = new(Id);
+
     public ConfigFile GetConfigFile()
     {
         return Config;
@@ -33,7 +39,8 @@ public partial class LaunchpadReloadedPlugin : BasePlugin, IMiraPlugin
     {
         Harmony.PatchAll();
 
-        ReactorCredits.Register("TOR-W Launchpad", Version.Truncate(11, "") ?? Version, true, ReactorCredits.AlwaysShow);
+        ReactorCredits.Register("TOR-W Launchpad", Version.Truncate(11, "") ?? Version, true,
+            ReactorCredits.AlwaysShow);
         LaunchpadSettings.Initialize();
 
         Config.Save();

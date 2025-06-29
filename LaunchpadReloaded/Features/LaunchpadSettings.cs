@@ -37,7 +37,7 @@ public class LaunchpadSettings
             ChangedEvent = val =>
             {
                 var plugin = MiraPluginManager.GetPluginByGuid(LaunchpadReloadedPlugin.Id)!;
-                foreach (var button in plugin.GetButtons())
+                foreach (var button in plugin.Buttons)
                 {
                     button.SetButtonLocation(val ? MiraAPI.Hud.ButtonLocation.BottomLeft : MiraAPI.Hud.ButtonLocation.BottomRight);
                 }

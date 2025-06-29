@@ -28,6 +28,7 @@ public static class LaunchpadPalette
     public static readonly Color NeutralKillerColor = new Color32(44, 0, 110, 255);
     public static readonly Color TraitorColor = new Color32(89, 18, 18, 255);
     public static readonly Color ExecutionerColor = new Color32(221, 176, 152, 255);
+    public static readonly Color DarkFairyColor = new Color32(51, 4, 93, 255);
     
     // Target Modifiers
     public static readonly Color TargetColor = new Color32(6, 156, 131, 255);

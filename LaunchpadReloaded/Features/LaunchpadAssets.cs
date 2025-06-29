@@ -71,7 +71,7 @@ public static class LaunchpadAssets
     public static readonly LoadableAsset<Sprite> FrozenBodyOverlay = new LoadableResourceAsset("TORWLaunchpad.Resources.BodyFrozenOverlay.png");
     public static readonly LoadableAsset<Sprite> TraitorIcon = new LoadableResourceAsset("TORWLaunchpad.Resources.Traitor.png");
     public static readonly LoadableAsset<Sprite> TeleportButton = new LoadableResourceAsset("TORWLaunchpad.Resources.TeleportButton.png");
-    
+    public static readonly LoadableAsset<Sprite> DarkFairyButton = new LoadableResourceAsset("TORWLaunchpad.Resources.Darken.png");
 
     // Sounds
     public static readonly LoadableAsset<AudioClip> BeepSound = new LoadableBundleAsset<AudioClip>("Beep.wav", Bundle);
