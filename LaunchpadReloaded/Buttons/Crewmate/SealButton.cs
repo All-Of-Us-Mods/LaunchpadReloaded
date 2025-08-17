@@ -6,6 +6,7 @@ using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
+using Rewired;
 using UnityEngine;
 using Helpers = MiraAPI.Utilities.Helpers;
 
@@ -17,6 +18,7 @@ public class SealButton : BaseLaunchpadButton<Vent>
     public override float Cooldown => OptionGroupSingleton<SealerOptions>.Instance.SealVentCooldown;
     public override float EffectDuration => 0;
     public override int MaxUses => (int)OptionGroupSingleton<SealerOptions>.Instance.SealVentUses;
+    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.SealButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => false;

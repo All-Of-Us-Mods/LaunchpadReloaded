@@ -6,6 +6,7 @@ using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
 using MiraAPI.Utilities.Assets;
+using Rewired;
 using UnityEngine;
 
 namespace LaunchpadReloaded.Buttons.Impostor;
@@ -16,6 +17,7 @@ public class HackButton : BaseLaunchpadButton
     public override float Cooldown => (int)OptionGroupSingleton<HackerOptions>.Instance.HackCooldown;
     public override float EffectDuration => OptionGroupSingleton<HackerOptions>.Instance.HackDuration;
     public override int MaxUses => (int)OptionGroupSingleton<HackerOptions>.Instance.HackUses;
+    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.HackButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => false;

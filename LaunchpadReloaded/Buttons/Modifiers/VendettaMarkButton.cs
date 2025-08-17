@@ -7,6 +7,7 @@ using MiraAPI.Modifiers;
 using MiraAPI.PluginLoading;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
+using Rewired;
 using UnityEngine;
 
 namespace LaunchpadReloaded.Buttons.Modifiers;
@@ -17,7 +18,8 @@ public class VendettaMarkButton : BaseLaunchpadButton<PlayerControl>
     public override string Name => "Mark";
     public override float Cooldown => OptionGroupSingleton<VendettaOptions>.Instance.MarkCooldown;
     public override int MaxUses => (int)OptionGroupSingleton<VendettaOptions>.Instance.MarkUses;
-    
+    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
+
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.InjectButton; // needs a proper sprite
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;

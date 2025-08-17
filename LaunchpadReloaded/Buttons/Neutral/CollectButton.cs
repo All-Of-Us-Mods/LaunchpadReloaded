@@ -6,6 +6,7 @@ using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
+using Rewired;
 using UnityEngine;
 
 namespace LaunchpadReloaded.Buttons.Neutral;
@@ -16,6 +17,7 @@ public class CollectButton : BaseLaunchpadButton<DeadBody>
     public override float Cooldown => OptionGroupSingleton<ReaperOptions>.Instance.CollectCooldown;
     public override float EffectDuration => 0;
     public override int MaxUses => 0;
+    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.SoulButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => false;

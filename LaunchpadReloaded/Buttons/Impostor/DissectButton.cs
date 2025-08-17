@@ -6,6 +6,7 @@ using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
+using Rewired;
 using UnityEngine;
 using Helpers = MiraAPI.Utilities.Helpers;
 
@@ -17,6 +18,7 @@ public class DissectButton : BaseLaunchpadButton<DeadBody>
     public override float Cooldown => OptionGroupSingleton<SurgeonOptions>.Instance.DissectCooldown;
     public override float EffectDuration => 0;
     public override int MaxUses => (int)OptionGroupSingleton<SurgeonOptions>.Instance.DissectUses;
+    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.V;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.DissectButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => false;

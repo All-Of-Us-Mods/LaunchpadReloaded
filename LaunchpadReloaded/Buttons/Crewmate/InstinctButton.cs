@@ -6,6 +6,7 @@ using MiraAPI.GameOptions;
 using MiraAPI.Utilities.Assets;
 using System.Linq;
 using MiraAPI.Modifiers;
+using Rewired;
 using UnityEngine;
 
 namespace LaunchpadReloaded.Buttons.Crewmate;
@@ -16,6 +17,7 @@ public class InstinctButton : BaseLaunchpadButton
     public override float Cooldown => OptionGroupSingleton<DetectiveOptions>.Instance.InstinctCooldown;
     public override float EffectDuration => OptionGroupSingleton<DetectiveOptions>.Instance.InstinctDuration;
     public override int MaxUses => (int)OptionGroupSingleton<DetectiveOptions>.Instance.InstinctUses;
+    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.InstinctButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;

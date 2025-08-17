@@ -8,6 +8,7 @@ using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
+using Rewired;
 using UnityEngine;
 using Helpers = MiraAPI.Utilities.Helpers;
 
@@ -22,6 +23,7 @@ public class ReviveButton : BaseLaunchpadButton<DeadBody>
     public override float EffectDuration => 0;
 
     public override int MaxUses => (int)OptionGroupSingleton<MedicOptions>.Instance.MaxRevives;
+    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F; 
 
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.ReviveButton;
 

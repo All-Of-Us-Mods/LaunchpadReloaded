@@ -9,6 +9,7 @@ using MiraAPI.Modifiers;
 using MiraAPI.Networking;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
+using Rewired;
 using UnityEngine;
 
 namespace LaunchpadReloaded.Buttons.Impostor;
@@ -19,6 +20,7 @@ public class InjectButton : BaseLaunchpadButton<PlayerControl>
     public override float Cooldown => OptionGroupSingleton<SurgeonOptions>.Instance.InjectCooldown;
     public override float EffectDuration => OptionGroupSingleton<SurgeonOptions>.Instance.PoisonDelay;
     public override int MaxUses => (int)OptionGroupSingleton<SurgeonOptions>.Instance.InjectUses;
+    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.InjectButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => false;

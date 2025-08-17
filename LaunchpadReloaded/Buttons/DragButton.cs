@@ -9,6 +9,7 @@ using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
+using Rewired;
 using UnityEngine;
 using Helpers = MiraAPI.Utilities.Helpers;
 
@@ -20,6 +21,7 @@ public class DragButton : BaseLaunchpadButton<DeadBody>
     public override float Cooldown => 0;
     public override float EffectDuration => 0;
     public override int MaxUses => 0;
+    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.V;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.DragButton;
     public override float Distance => PlayerControl.LocalPlayer.MaxReportDistance / 4f;
     public override bool TimerAffectedByPlayer => true;

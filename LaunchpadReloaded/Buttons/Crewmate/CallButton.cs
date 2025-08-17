@@ -5,6 +5,7 @@ using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
 using MiraAPI.Hud;
 using MiraAPI.Utilities.Assets;
+using Rewired;
 using UnityEngine;
 
 namespace LaunchpadReloaded.Buttons.Crewmate;
@@ -15,6 +16,7 @@ public class CallButton : BaseLaunchpadButton
     public override float Cooldown => OptionGroupSingleton<CaptainOptions>.Instance.CaptainMeetingCooldown;
     public override float EffectDuration => 0;
     public override int MaxUses => (int)OptionGroupSingleton<CaptainOptions>.Instance.CaptainMeetingCount;
+    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.C;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.CallButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;

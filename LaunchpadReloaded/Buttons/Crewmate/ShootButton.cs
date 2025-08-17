@@ -6,6 +6,7 @@ using MiraAPI.GameOptions;
 using MiraAPI.Networking;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
+using Rewired;
 using UnityEngine;
 
 namespace LaunchpadReloaded.Buttons.Crewmate;
@@ -16,6 +17,7 @@ public class ShootButton : BaseLaunchpadButton<PlayerControl>
     public override float Cooldown => OptionGroupSingleton<SheriffOptions>.Instance.ShotCooldown;
     public override float EffectDuration => 0;
     public override int MaxUses => (int)OptionGroupSingleton<SheriffOptions>.Instance.ShotsPerGame;
+    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.ShootButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;

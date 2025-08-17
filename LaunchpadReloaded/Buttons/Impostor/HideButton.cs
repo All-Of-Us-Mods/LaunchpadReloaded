@@ -8,6 +8,7 @@ using LaunchpadReloaded.Utilities;
 using MiraAPI.Modifiers;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
+using Rewired;
 using UnityEngine;
 using Helpers = MiraAPI.Utilities.Helpers;
 
@@ -19,6 +20,7 @@ public class HideButton : BaseLaunchpadButton<DeadBody>
     public override float Cooldown => 5;
     public override float EffectDuration => 0;
     public override int MaxUses => 3;
+    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.HideButton;
     public override float Distance => PlayerControl.LocalPlayer.MaxReportDistance / 4f;
     public override bool TimerAffectedByPlayer => true;

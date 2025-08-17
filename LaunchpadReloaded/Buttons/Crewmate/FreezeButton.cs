@@ -6,6 +6,7 @@ using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
+using Rewired;
 using UnityEngine;
 using Helpers = MiraAPI.Utilities.Helpers;
 
@@ -17,6 +18,7 @@ public class FreezeButton : BaseLaunchpadButton<DeadBody>
     public override float Cooldown => OptionGroupSingleton<CoronerOptions>.Instance.FreezeCooldown;
     public override float EffectDuration => 0;
     public override int MaxUses => (int)OptionGroupSingleton<CoronerOptions>.Instance.FreezeUses;
+    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.FreezeButton;
     public override float Distance => PlayerControl.LocalPlayer.MaxReportDistance / 4f;
     public override bool TimerAffectedByPlayer => true;

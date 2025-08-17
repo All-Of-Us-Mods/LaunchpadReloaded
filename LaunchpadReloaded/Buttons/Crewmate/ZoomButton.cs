@@ -5,6 +5,7 @@ using MiraAPI.GameOptions;
 using MiraAPI.Utilities.Assets;
 using Reactor.Utilities;
 using System.Collections;
+using Rewired;
 using UnityEngine;
 
 namespace LaunchpadReloaded.Buttons.Crewmate;
@@ -18,6 +19,7 @@ public class ZoomButton : BaseLaunchpadButton
     public override float EffectDuration => OptionGroupSingleton<CaptainOptions>.Instance.ZoomDuration;
 
     public override int MaxUses => 0;
+    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
 
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.ZoomButton;
     public override bool TimerAffectedByPlayer => true;

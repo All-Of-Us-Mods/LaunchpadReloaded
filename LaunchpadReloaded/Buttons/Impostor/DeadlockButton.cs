@@ -6,6 +6,7 @@ using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
 using MiraAPI.Utilities.Assets;
 using Reactor.Utilities;
+using Rewired;
 using UnityEngine;
 
 namespace LaunchpadReloaded.Buttons.Impostor;
@@ -16,6 +17,7 @@ public class DeadlockButton : BaseLaunchpadButton
     public override float Cooldown => (int)OptionGroupSingleton<HitmanOptions>.Instance.DeadlockCooldown;
     public override float EffectDuration => OptionGroupSingleton<HitmanOptions>.Instance.DeadlockDuration;
     public override int MaxUses => (int)OptionGroupSingleton<HitmanOptions>.Instance.DeadlockUses;
+    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.DeadlockButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => false;
