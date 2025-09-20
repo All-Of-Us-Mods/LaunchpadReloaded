@@ -1,5 +1,6 @@
 ﻿using AmongUs.Data;
 using HarmonyLib;
+using LaunchpadReloaded.Components;
 using LaunchpadReloaded.Features;
 using LaunchpadReloaded.Features.Managers;
 using LaunchpadReloaded.Networking.Color;
@@ -28,6 +29,20 @@ public static class PlayerTabPatches
         instance.currentColor = SelectGradient ? GradientManager.LocalGradientId : DataManager.Player.Customization.Color;
     }
 
+    [HarmonyPatch(typeof(InventoryTab), nameof(InventoryTab.GetDisplayColor))]
+    public static class InventoryTabPatch
+    {
+        public static bool Prefix(InventoryTab __instance, ref int __result)
+        {
+            if (SelectGradient)
+            {
+                __result = GradientManager.LocalGradientId;
+                return false;
+            }
+
+            return true;
+        }
+    }
 
     [HarmonyPostfix]
     [HarmonyPatch(nameof(PlayerTab.OnEnable))]
@@ -102,19 +117,12 @@ public static class PlayerTabPatches
             var colorName = Palette.GetColorName(colorId);
             PlayerCustomizationMenu.Instance.SetItemName(colorName);
             __instance.PlayerPreview.UpdateFromDataManager(PlayerMaterial.MaskType.None);
-            return false;
-        }
 
-        return true;
-    }
-
-    [HarmonyPrefix]
-    [HarmonyPatch(nameof(PlayerTab.GetCurrentColorId))]
-    public static bool GetCurrentColorPrefix(PlayerTab __instance, ref int __result)
-    {
-        if (SelectGradient)
-        {
-            __result = GradientManager.LocalGradientId;
+            var playerGradientData = __instance.PlayerPreview.GetComponent<PlayerGradientData>();
+            if (playerGradientData)
+            {
+                playerGradientData.Destroy();
+            }
             return false;
         }
 
