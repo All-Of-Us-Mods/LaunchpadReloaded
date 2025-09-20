@@ -8,6 +8,9 @@ public static class GameManagerPatch
 {
     public static void Postfix(GameManager __instance)
     {
-        __instance.DeadBodyPrefab.gameObject.AddComponent<DeadBodyCacheComponent>();
+        foreach (var deadBody in __instance.deadBodyPrefab)
+        {
+            deadBody.gameObject.AddComponent<DeadBodyCacheComponent>();
+        }
     }
 }

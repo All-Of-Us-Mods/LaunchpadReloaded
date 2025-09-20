@@ -108,7 +108,7 @@ public sealed class GuessRoleMinigame(IntPtr ptr) : Minigame(ptr)
             clickHandler(null);
         }));
 
-        var roles = RoleManager.Instance.AllRoles.Where(roleMatch).ToArray();
+        var roles = RoleManager.Instance.AllRoles.ToArray().Where(roleMatch).ToArray();
 
         foreach (var role in roles)
         {
