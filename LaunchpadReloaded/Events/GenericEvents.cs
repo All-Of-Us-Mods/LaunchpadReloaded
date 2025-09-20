@@ -25,6 +25,18 @@ namespace LaunchpadReloaded.Events;
 public static class GenericEvents
 {
     [RegisterEvent]
+    public static void AfterMurderEvent(AfterMurderEvent @event)
+    {
+        var suspects = PlayerControl.AllPlayerControls.ToArray()
+            .Where(pc => pc != @event.Target && pc != @event.Source && !pc.Data.IsDead && pc.Data.Role is not LpDetectiveRole)
+            .Take((int)OptionGroupSingleton<DetectiveOptions>.Instance.SuspectCount)
+            .Append(@event.Source);
+
+        var deathData = new DeathData(DateTime.UtcNow, @event.Source, suspects);
+        @event.Target.GetModifierComponent().AddModifier(deathData);
+    }
+
+    [RegisterEvent]
     public static void SetRoleEvent(SetRoleEvent @event)
     {
         if (@event.Player.AmOwner && NotepadHud.Instance != null)
