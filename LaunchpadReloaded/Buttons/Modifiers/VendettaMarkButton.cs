@@ -3,6 +3,7 @@ using LaunchpadReloaded.Features;
 using LaunchpadReloaded.Modifiers;
 using LaunchpadReloaded.Options.Modifiers.Crewmate;
 using MiraAPI.GameOptions;
+using MiraAPI.Keybinds;
 using MiraAPI.Modifiers;
 using MiraAPI.PluginLoading;
 using MiraAPI.Utilities;
@@ -18,11 +19,12 @@ public class VendettaMarkButton : BaseLaunchpadButton<PlayerControl>
     public override string Name => "Mark";
     public override float Cooldown => OptionGroupSingleton<VendettaOptions>.Instance.MarkCooldown;
     public override int MaxUses => (int)OptionGroupSingleton<VendettaOptions>.Instance.MarkUses;
-    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
 
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.InjectButton; // needs a proper sprite
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
+
+    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Mark", KeyboardKeyCode.F);
 
     protected override void OnClick()
     {

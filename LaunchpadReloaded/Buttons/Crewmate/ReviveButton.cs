@@ -5,6 +5,7 @@ using LaunchpadReloaded.Options.Roles.Crewmate;
 using LaunchpadReloaded.Roles.Crewmate;
 using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
+using MiraAPI.Keybinds;
 using MiraAPI.Modifiers;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
@@ -23,13 +24,14 @@ public class ReviveButton : BaseLaunchpadButton<DeadBody>
     public override float EffectDuration => 0;
 
     public override int MaxUses => (int)OptionGroupSingleton<MedicOptions>.Instance.MaxRevives;
-    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F; 
 
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.ReviveButton;
 
     public override float Distance => PlayerControl.LocalPlayer.MaxReportDistance / 4f;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
+
+    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Revive", KeyboardKeyCode.F);
 
     public override bool Enabled(RoleBehaviour? role) => role is MedicRole;
 

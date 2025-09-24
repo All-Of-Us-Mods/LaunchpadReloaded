@@ -3,6 +3,7 @@ using LaunchpadReloaded.Features;
 using LaunchpadReloaded.Options.Roles.Crewmate;
 using LaunchpadReloaded.Roles.Crewmate;
 using MiraAPI.GameOptions;
+using MiraAPI.Keybinds;
 using MiraAPI.Networking;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
@@ -17,10 +18,11 @@ public class ShootButton : BaseLaunchpadButton<PlayerControl>
     public override float Cooldown => OptionGroupSingleton<SheriffOptions>.Instance.ShotCooldown;
     public override float EffectDuration => 0;
     public override int MaxUses => (int)OptionGroupSingleton<SheriffOptions>.Instance.ShotsPerGame;
-    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.ShootButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
+
+    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Shoot", KeyboardKeyCode.F);
 
     public override bool Enabled(RoleBehaviour? role) => role is SheriffRole;
 

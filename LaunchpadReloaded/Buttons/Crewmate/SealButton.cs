@@ -4,6 +4,7 @@ using LaunchpadReloaded.Options.Roles.Crewmate;
 using LaunchpadReloaded.Roles.Crewmate;
 using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
+using MiraAPI.Keybinds;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
 using Rewired;
@@ -18,11 +19,12 @@ public class SealButton : BaseLaunchpadButton<Vent>
     public override float Cooldown => OptionGroupSingleton<SealerOptions>.Instance.SealVentCooldown;
     public override float EffectDuration => 0;
     public override int MaxUses => (int)OptionGroupSingleton<SealerOptions>.Instance.SealVentUses;
-    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.SealButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => false;
     public override float Distance => 1f;
+
+    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Seal", KeyboardKeyCode.F);
 
     public override bool Enabled(RoleBehaviour? role)
     {

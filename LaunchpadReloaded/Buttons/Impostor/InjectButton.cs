@@ -5,6 +5,7 @@ using LaunchpadReloaded.Options;
 using LaunchpadReloaded.Options.Roles.Impostor;
 using LaunchpadReloaded.Roles.Impostor;
 using MiraAPI.GameOptions;
+using MiraAPI.Keybinds;
 using MiraAPI.Modifiers;
 using MiraAPI.Networking;
 using MiraAPI.Utilities;
@@ -20,10 +21,11 @@ public class InjectButton : BaseLaunchpadButton<PlayerControl>
     public override float Cooldown => OptionGroupSingleton<SurgeonOptions>.Instance.InjectCooldown;
     public override float EffectDuration => OptionGroupSingleton<SurgeonOptions>.Instance.PoisonDelay;
     public override int MaxUses => (int)OptionGroupSingleton<SurgeonOptions>.Instance.InjectUses;
-    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.InjectButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => false;
+
+    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Inject", KeyboardKeyCode.F);
 
     public override bool Enabled(RoleBehaviour? role) => role is SurgeonRole;
 

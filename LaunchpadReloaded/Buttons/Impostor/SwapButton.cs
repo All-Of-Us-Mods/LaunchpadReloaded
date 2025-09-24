@@ -3,6 +3,7 @@ using LaunchpadReloaded.Options.Roles.Impostor;
 using LaunchpadReloaded.Roles.Impostor;
 using MiraAPI.GameOptions;
 using MiraAPI.Hud;
+using MiraAPI.Keybinds;
 using MiraAPI.Utilities.Assets;
 using Rewired;
 using UnityEngine;
@@ -15,10 +16,11 @@ public class SwapButton : BaseLaunchpadButton
     public override float Cooldown => OptionGroupSingleton<SwapshifterOptions>.Instance.SwapCooldown;
     public override float EffectDuration => OptionGroupSingleton<SwapshifterOptions>.Instance.SwapDuration;
     public override int MaxUses => (int)OptionGroupSingleton<SwapshifterOptions>.Instance.SwapUses;
-    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.SwapButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
+
+    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Swap", KeyboardKeyCode.F);
 
     public override bool Enabled(RoleBehaviour? role)
     {

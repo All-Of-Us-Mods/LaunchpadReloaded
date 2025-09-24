@@ -6,6 +6,7 @@ using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
 using MiraAPI.Utilities.Assets;
 using System.Linq;
+using MiraAPI.Keybinds;
 using Rewired;
 using UnityEngine;
 
@@ -17,10 +18,11 @@ public class DigButton : BaseLaunchpadButton
     public override float Cooldown => OptionGroupSingleton<BurrowerOptions>.Instance.VentDigCooldown;
     public override float EffectDuration => 0;
     public override int MaxUses => (int)OptionGroupSingleton<BurrowerOptions>.Instance.VentDigUses;
-    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.DigVentButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => false;
+
+    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Dig Vent", KeyboardKeyCode.F);
 
     private float _ventDist = OptionGroupSingleton<BurrowerOptions>.Instance.VentDist;
 

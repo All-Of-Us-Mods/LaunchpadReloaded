@@ -4,6 +4,7 @@ using LaunchpadReloaded.Options.Roles.Impostor;
 using LaunchpadReloaded.Roles.Impostor;
 using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
+using MiraAPI.Keybinds;
 using MiraAPI.Utilities.Assets;
 using Reactor.Utilities;
 using Rewired;
@@ -17,10 +18,12 @@ public class DeadlockButton : BaseLaunchpadButton
     public override float Cooldown => (int)OptionGroupSingleton<HitmanOptions>.Instance.DeadlockCooldown;
     public override float EffectDuration => OptionGroupSingleton<HitmanOptions>.Instance.DeadlockDuration;
     public override int MaxUses => (int)OptionGroupSingleton<HitmanOptions>.Instance.DeadlockUses;
-    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.DeadlockButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => false;
+
+    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Deadlock", KeyboardKeyCode.F);
+    
     public override bool Enabled(RoleBehaviour? role) => role is HitmanRole;
 
     protected override void OnClick()

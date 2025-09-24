@@ -5,6 +5,7 @@ using LaunchpadReloaded.Networking;
 using LaunchpadReloaded.Networking.Roles;
 using LaunchpadReloaded.Roles.Impostor;
 using LaunchpadReloaded.Utilities;
+using MiraAPI.Keybinds;
 using MiraAPI.Modifiers;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
@@ -20,11 +21,12 @@ public class HideButton : BaseLaunchpadButton<DeadBody>
     public override float Cooldown => 5;
     public override float EffectDuration => 0;
     public override int MaxUses => 3;
-    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.HideButton;
     public override float Distance => PlayerControl.LocalPlayer.MaxReportDistance / 4f;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
+
+    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Hide", KeyboardKeyCode.F);
 
     private static Vent VentTarget => HudManager.Instance.ImpostorVentButton.currentTarget;
 

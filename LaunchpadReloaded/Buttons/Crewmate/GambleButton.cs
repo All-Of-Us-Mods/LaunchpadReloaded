@@ -5,6 +5,7 @@ using LaunchpadReloaded.Modifiers;
 using LaunchpadReloaded.Options.Roles.Crewmate;
 using LaunchpadReloaded.Roles.Crewmate;
 using MiraAPI.GameOptions;
+using MiraAPI.Keybinds;
 using MiraAPI.Modifiers;
 using MiraAPI.Networking;
 using MiraAPI.Utilities;
@@ -19,10 +20,11 @@ public class GambleButton : BaseLaunchpadButton<PlayerControl>
     public override string Name => "Gamble";
     public override float Cooldown => OptionGroupSingleton<GamblerOptions>.Instance.GambleCooldown;
     public override int MaxUses => (int)OptionGroupSingleton<GamblerOptions>.Instance.GambleUses;
-    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.GambleButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
+
+    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Gamble", KeyboardKeyCode.F);
 
     public override bool Enabled(RoleBehaviour? role) => role is GamblerRole;
 

@@ -4,6 +4,7 @@ using LaunchpadReloaded.Options.Roles.Crewmate;
 using LaunchpadReloaded.Roles.Crewmate;
 using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
+using MiraAPI.Keybinds;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
 using Rewired;
@@ -18,11 +19,12 @@ public class FreezeButton : BaseLaunchpadButton<DeadBody>
     public override float Cooldown => OptionGroupSingleton<CoronerOptions>.Instance.FreezeCooldown;
     public override float EffectDuration => 0;
     public override int MaxUses => (int)OptionGroupSingleton<CoronerOptions>.Instance.FreezeUses;
-    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.FreezeButton;
     public override float Distance => PlayerControl.LocalPlayer.MaxReportDistance / 4f;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
+
+    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Freeze", KeyboardKeyCode.F);
 
     public override bool Enabled(RoleBehaviour? role)
     {

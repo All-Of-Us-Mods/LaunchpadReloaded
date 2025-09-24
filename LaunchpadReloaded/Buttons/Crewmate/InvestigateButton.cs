@@ -2,6 +2,7 @@ using LaunchpadReloaded.Components;
 using LaunchpadReloaded.Features;
 using LaunchpadReloaded.Roles.Crewmate;
 using LaunchpadReloaded.Utilities;
+using MiraAPI.Keybinds;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
 using Rewired;
@@ -16,11 +17,12 @@ public class InvestigateButton : BaseLaunchpadButton<DeadBody>
     public override float Cooldown => 1;
     public override float EffectDuration => 0;
     public override int MaxUses => 0;
-    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.V;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.InvestigateButton;
     public override float Distance => PlayerControl.LocalPlayer.MaxReportDistance / 4f;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
+
+    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Investigate", KeyboardKeyCode.V);
 
     public override bool Enabled(RoleBehaviour? role)
     {

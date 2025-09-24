@@ -4,6 +4,7 @@ using LaunchpadReloaded.Options.Roles.Impostor;
 using LaunchpadReloaded.Roles.Impostor;
 using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
+using MiraAPI.Keybinds;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
 using Rewired;
@@ -18,10 +19,11 @@ public class DissectButton : BaseLaunchpadButton<DeadBody>
     public override float Cooldown => OptionGroupSingleton<SurgeonOptions>.Instance.DissectCooldown;
     public override float EffectDuration => 0;
     public override int MaxUses => (int)OptionGroupSingleton<SurgeonOptions>.Instance.DissectUses;
-    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.V;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.DissectButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => false;
+
+    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Dissect", KeyboardKeyCode.V);
 
     public override bool Enabled(RoleBehaviour? role)
     {

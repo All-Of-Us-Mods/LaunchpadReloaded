@@ -4,6 +4,7 @@ using LaunchpadReloaded.Options.Roles.Impostor;
 using LaunchpadReloaded.Roles.Impostor;
 using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
+using MiraAPI.Keybinds;
 using MiraAPI.Modifiers;
 using MiraAPI.Utilities.Assets;
 using Rewired;
@@ -17,10 +18,11 @@ public class HackButton : BaseLaunchpadButton
     public override float Cooldown => (int)OptionGroupSingleton<HackerOptions>.Instance.HackCooldown;
     public override float EffectDuration => OptionGroupSingleton<HackerOptions>.Instance.HackDuration;
     public override int MaxUses => (int)OptionGroupSingleton<HackerOptions>.Instance.HackUses;
-    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.F;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.HackButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => false;
+
+    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Hack", KeyboardKeyCode.F);
     public override bool Enabled(RoleBehaviour? role) => role is HackerRole;
     public override bool CanUse() => base.CanUse() && !HackerUtilities.AnyPlayerHacked();
 

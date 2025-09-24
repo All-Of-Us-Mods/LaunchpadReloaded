@@ -4,6 +4,7 @@ using LaunchpadReloaded.Roles.Crewmate;
 using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
 using MiraAPI.Hud;
+using MiraAPI.Keybinds;
 using MiraAPI.Utilities.Assets;
 using Rewired;
 using UnityEngine;
@@ -16,10 +17,11 @@ public class CallButton : BaseLaunchpadButton
     public override float Cooldown => OptionGroupSingleton<CaptainOptions>.Instance.CaptainMeetingCooldown;
     public override float EffectDuration => 0;
     public override int MaxUses => (int)OptionGroupSingleton<CaptainOptions>.Instance.CaptainMeetingCount;
-    public override KeyboardKeyCode Defaultkeybind => KeyboardKeyCode.C;
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.CallButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
+
+    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Call", KeyboardKeyCode.C);
 
     public override bool Enabled(RoleBehaviour? role)
     {
