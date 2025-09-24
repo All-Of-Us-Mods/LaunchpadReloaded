@@ -1,85 +1,89 @@
 ﻿using Il2CppSystem;
-using LaunchpadReloaded.API.Settings;
-using MiraAPI.PluginLoading;
 using System.Linq;
 using BepInEx.Configuration;
 using LaunchpadReloaded.Components;
-using Reactor.Utilities;
+using MiraAPI.Hud;
+using MiraAPI.LocalSettings;
+using MiraAPI.LocalSettings.Attributes;
 using Object = Il2CppSystem.Object;
 
 namespace LaunchpadReloaded.Features;
 
-public class LaunchpadSettings
+public class LaunchpadSettings : LocalSettingsTab
 {
-    public static LaunchpadSettings? Instance { get; private set; }
+    public override string TabName => "Launchpad";
 
-    public CustomSetting Bloom { get; }
-    public CustomSetting UseCustomBloomSettings { get; }
-    public CustomSetting LockedCamera { get; }
-    public CustomSetting UniqueDummies { get; }
-    public CustomSetting ButtonLocation { get; }
-
-    public ConfigEntry<float> BloomThreshold { get; }
-
-    private LaunchpadSettings()
+    public override LocalSettingTabAppearance TabAppearance { get; } = new()
     {
-        var configFile = PluginSingleton<LaunchpadReloadedPlugin>.Instance.GetConfigFile();
-        var buttonConfig = configFile.Bind("LP Settings", "Button Location", true, "Move buttons to the left side of the screen");
-        var bloomConfig = configFile.Bind("LP Settings", "Bloom", true, "Enable bloom effect");
-        var lockedCameraConfig = configFile.Bind("LP Settings", "Locked Camera", false, "Lock camera to player");
-        var uniqueDummiesConfig = configFile.Bind("LP Settings", "Unique Freeplay Dummies", true, "Give each dummy a unique name");
+        TabIcon = LaunchpadAssets.HackButton
+    };
 
-        ButtonLocation = new CustomSetting("Buttons On Left", buttonConfig.Value)
+    [LocalToggleSetting]
+    public ConfigEntry<bool> Bloom { get; }
+
+    [LocalToggleSetting]
+    public ConfigEntry<bool> CustomBloomSettings { get; }
+
+    [LocalSliderSetting(formatString: "0.0", min: 0.5f, max: 5f)]
+    public ConfigEntry<float> BloomSlider { get; }
+
+    [LocalToggleSetting]
+    public ConfigEntry<bool> LockedCamera { get; private set; }
+
+    [LocalToggleSetting]
+    public ConfigEntry<bool> UniqueDummies { get; }
+
+    [LocalEnumSetting(names:["Bottom Left", "Bottom Right"])]
+    public ConfigEntry<ButtonLocation> ButtonLocation { get; }
+
+    public LaunchpadSettings(ConfigFile config) : base(config)
+    {
+        Bloom = config.Bind("General", "Enable Bloom", true);
+        Bloom.SettingChanged += (_, _) => { SetBloom(Bloom.Value); };
+
+        CustomBloomSettings = config.Bind("General", "Custom Bloom Settings", false);
+        CustomBloomSettings.SettingChanged += (_, _) => { SetBloom(Bloom.Value); };
+
+        BloomSlider = config.Bind("General", "Bloom Threshold", 1.2f);
+        BloomSlider.SettingChanged += (_, _) => { SetBloom(Bloom.Value); };
+
+        LockedCamera = config.Bind("General", "Locked Camera", false);
+
+        ButtonLocation = config.Bind("General", "Button Location", MiraAPI.Hud.ButtonLocation.BottomRight);
+        ButtonLocation.SettingChanged += (_, _) =>
         {
-            ChangedEvent = val =>
+            foreach (var button in MiraAPI.PluginLoading.MiraPluginManager.GetPluginByGuid(LaunchpadReloadedPlugin.Id)!.Buttons)
             {
-                var plugin = MiraPluginManager.GetPluginByGuid(LaunchpadReloadedPlugin.Id)!;
-                foreach (var button in plugin.Buttons)
-                {
-                    button.SetButtonLocation(val ? MiraAPI.Hud.ButtonLocation.BottomLeft : MiraAPI.Hud.ButtonLocation.BottomRight);
-                }
+                button.SetButtonLocation(ButtonLocation.Value);
             }
         };
 
-        Bloom = new CustomSetting("Bloom", bloomConfig.Value)
+        UniqueDummies = config.Bind("General", "Unique Freeplay Dummies", false);
+        UniqueDummies.SettingChanged += (_, _) =>
         {
-            ChangedEvent = SetBloom
-        };
-
-        UseCustomBloomSettings = new CustomSetting("Use Custom Bloom Settings", false)
-        {
-            ChangedEvent = _ => { SetBloom(Bloom.Enabled); }
-        };
-
-        BloomThreshold = configFile.Bind("LP Settings", "Custom Bloom Threshold", 1.2f, "Bloom threshold (linear)");
-        BloomThreshold.SettingChanged += (_, _) => { SetBloom(Bloom.Enabled); };
-
-        LockedCamera = new CustomSetting("Locked Camera", lockedCameraConfig.Value);
-        UniqueDummies = new CustomSetting("Unique Freeplay Dummies", uniqueDummiesConfig.Value)
-        {
-            ChangedEvent = val =>
+            if (!TutorialManager.InstanceExists || !AccountManager.InstanceExists)
             {
-                if (!TutorialManager.InstanceExists || !AccountManager.InstanceExists)
+                return;
+            }
+
+            var dummies = UnityEngine.Object.FindObjectsOfType<DummyBehaviour>().ToArray().Reverse().ToList();
+
+            for (var i = 0; i < dummies.Count; i++)
+            {
+                var dummy = dummies[i];
+                if (!dummy.myPlayer)
                 {
-                    return;
+                    continue;
                 }
 
-                var dummies = UnityEngine.Object.FindObjectsOfType<DummyBehaviour>().ToArray().Reverse().ToList();
-
-                for (var i = 0; i < dummies.Count; i++)
-                {
-                    var dummy = dummies[i];
-                    if (!dummy.myPlayer)
-                    {
-                        continue;
-                    }
-
-                    dummy.myPlayer.SetName(val ? AccountManager.Instance.GetRandomName() :
-                        DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.Dummy, Array.Empty<Object>()) + " " + i);
-                }
+                dummy.myPlayer.SetName(UniqueDummies.Value
+                    ? AccountManager.Instance.GetRandomName()
+                    : DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.Dummy,
+                        Array.Empty<Object>()) + " " + i);
             }
         };
     }
+
 
     public static void SetBloom(bool enabled)
     {
@@ -94,10 +98,5 @@ public class LaunchpadSettings
         }
         bloom.enabled = enabled;
         bloom.SetBloomByMap();
-    }
-
-    public static void Initialize()
-    {
-        Instance = new LaunchpadSettings();
     }
 }

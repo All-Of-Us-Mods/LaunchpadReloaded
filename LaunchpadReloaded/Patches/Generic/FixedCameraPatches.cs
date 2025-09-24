@@ -1,6 +1,7 @@
 ﻿using AmongUs.Data;
 using HarmonyLib;
 using LaunchpadReloaded.Features;
+using MiraAPI.LocalSettings;
 using UnityEngine;
 
 namespace LaunchpadReloaded.Patches.Generic;
@@ -10,7 +11,7 @@ public static class FollowerCameraUpdatePatch
 {
     public static void Postfix(FollowerCamera __instance)
     {
-        if (!__instance.Target || __instance.Locked || LaunchpadSettings.Instance?.LockedCamera.Enabled != true) return;
+        if (!__instance.Target || __instance.Locked || !LocalSettingsTabSingleton<LaunchpadSettings>.Instance.LockedCamera.Value) return;
         __instance.centerPosition = __instance.Target.transform.position + (Vector3) __instance.Offset;
 
         var v = __instance.centerPosition;

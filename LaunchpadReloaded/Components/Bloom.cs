@@ -24,6 +24,7 @@
 
 using System;
 using LaunchpadReloaded.Features;
+using MiraAPI.LocalSettings;
 using Reactor.Utilities.Attributes;
 using UnityEngine;
 
@@ -40,9 +41,9 @@ public class Bloom(IntPtr cppPtr) : MonoBehaviour(cppPtr)
         }
 
         // Use custom bloom settings if enabled.
-        if (LaunchpadSettings.Instance?.UseCustomBloomSettings.Enabled == true)
+        if (LocalSettingsTabSingleton<LaunchpadSettings>.Instance.CustomBloomSettings.Value)
         {
-            ThresholdLinear = LaunchpadSettings.Instance.BloomThreshold.Value;
+            ThresholdLinear = LocalSettingsTabSingleton<LaunchpadSettings>.Instance.BloomSlider.Value;
             return;
         }
 

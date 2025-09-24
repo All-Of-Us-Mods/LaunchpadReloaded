@@ -1,6 +1,7 @@
 ﻿using LaunchpadReloaded.Features;
 using LaunchpadReloaded.Utilities;
 using MiraAPI.Hud;
+using MiraAPI.LocalSettings;
 using MiraAPI.PluginLoading;
 using UnityEngine;
 
@@ -9,9 +10,7 @@ namespace LaunchpadReloaded.Buttons;
 [MiraIgnore]
 public abstract class BaseLaunchpadButton : CustomActionButton
 {
-    public override ButtonLocation Location => LaunchpadSettings.Instance?.ButtonLocation.Enabled == true
-        ? ButtonLocation.BottomLeft
-        : ButtonLocation.BottomRight;
+    public override ButtonLocation Location => LocalSettingsTabSingleton<LaunchpadSettings>.Instance.ButtonLocation.Value;
 
     public abstract bool TimerAffectedByPlayer { get; }
 

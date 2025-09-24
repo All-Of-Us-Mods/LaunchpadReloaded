@@ -36,8 +36,6 @@ public partial class LaunchpadReloadedPlugin : BasePlugin, IMiraPlugin
 
         ReactorCredits.Register("Launchpad", Version.Truncate(11, "") ?? Version, true, ReactorCredits.AlwaysShow);
 
-        LaunchpadSettings.Initialize();
-
         Config.Save();
     }
 }

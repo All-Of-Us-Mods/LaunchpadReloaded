@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using LaunchpadReloaded.Features;
+using MiraAPI.LocalSettings;
 
 namespace LaunchpadReloaded.Patches.Generic;
 
@@ -8,6 +9,6 @@ public static class BloomPatch
 {
     public static void Postfix()
     {
-        LaunchpadSettings.SetBloom(LaunchpadSettings.Instance?.Bloom.Enabled ?? false);
+        LaunchpadSettings.SetBloom(LocalSettingsTabSingleton<LaunchpadSettings>.Instance.Bloom.Value);
     }
 }

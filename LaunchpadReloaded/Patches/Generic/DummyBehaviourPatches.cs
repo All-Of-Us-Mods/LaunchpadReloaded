@@ -1,6 +1,7 @@
 ﻿using AmongUs.GameOptions;
 using HarmonyLib;
 using LaunchpadReloaded.Features;
+using MiraAPI.LocalSettings;
 
 namespace LaunchpadReloaded.Patches.Generic;
 
@@ -13,7 +14,7 @@ public static class DummyBehaviourPatches
     {
         __instance.myPlayer.RpcSetRole(RoleTypes.Crewmate);
 
-        if (LaunchpadSettings.Instance?.UniqueDummies.Enabled == true)
+        if (LocalSettingsTabSingleton<LaunchpadSettings>.Instance.UniqueDummies.Value)
         {
             __instance.myPlayer.RpcSetName(AccountManager.Instance.GetRandomName());
         }
