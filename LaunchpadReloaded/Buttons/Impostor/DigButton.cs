@@ -22,8 +22,6 @@ public class DigButton : BaseLaunchpadButton
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => false;
 
-    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Dig Vent", KeyboardKeyCode.F);
-
     private float _ventDist = OptionGroupSingleton<BurrowerOptions>.Instance.VentDist;
 
     public override bool Enabled(RoleBehaviour? role)

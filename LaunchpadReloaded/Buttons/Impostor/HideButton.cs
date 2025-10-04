@@ -26,7 +26,7 @@ public class HideButton : BaseLaunchpadButton<DeadBody>
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
 
-    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Hide", KeyboardKeyCode.F);
+    public override BaseKeybind Keybind => MiraGlobalKeybinds.SecondaryAbility;
 
     private static Vent VentTarget => HudManager.Instance.ImpostorVentButton.currentTarget;
 

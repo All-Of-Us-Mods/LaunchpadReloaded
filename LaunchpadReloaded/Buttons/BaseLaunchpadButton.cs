@@ -1,6 +1,7 @@
 ﻿using LaunchpadReloaded.Features;
 using LaunchpadReloaded.Utilities;
 using MiraAPI.Hud;
+using MiraAPI.Keybinds;
 using MiraAPI.LocalSettings;
 using MiraAPI.PluginLoading;
 using UnityEngine;
@@ -15,6 +16,8 @@ public abstract class BaseLaunchpadButton : CustomActionButton
     public abstract bool TimerAffectedByPlayer { get; }
 
     public abstract bool AffectedByHack { get; }
+
+    public override BaseKeybind Keybind => MiraGlobalKeybinds.PrimaryAbility;
 
     public override bool CanUse()
     {
@@ -32,6 +35,8 @@ public abstract class BaseLaunchpadButton<T> : CustomActionButton<T> where T : M
     public abstract bool TimerAffectedByPlayer { get; }
 
     public abstract bool AffectedByHack { get; }
+
+    public override BaseKeybind Keybind => MiraGlobalKeybinds.PrimaryAbility;
 
     public override void ResetTarget()
     {

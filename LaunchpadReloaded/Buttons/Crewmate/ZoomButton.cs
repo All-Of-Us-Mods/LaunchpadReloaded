@@ -25,8 +25,6 @@ public class ZoomButton : BaseLaunchpadButton
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
 
-    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Zoom", KeyboardKeyCode.F);
-
     public override bool Enabled(RoleBehaviour? role)
     {
         return role is CaptainRole;

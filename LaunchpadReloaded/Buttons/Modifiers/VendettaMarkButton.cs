@@ -24,8 +24,6 @@ public class VendettaMarkButton : BaseLaunchpadButton<PlayerControl>
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
 
-    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Mark", KeyboardKeyCode.F);
-
     protected override void OnClick()
     {
         Target!.RpcAddModifier<VendettaMarkModifier>(PlayerControl.LocalPlayer.PlayerId);

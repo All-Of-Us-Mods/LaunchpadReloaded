@@ -22,8 +22,6 @@ public class InstinctButton : BaseLaunchpadButton
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
 
-    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Instinct", KeyboardKeyCode.F);
-
     public override bool Enabled(RoleBehaviour? role)
     {
         return role is LpDetectiveRole;

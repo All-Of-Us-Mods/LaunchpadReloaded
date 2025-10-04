@@ -24,8 +24,6 @@ public class SealButton : BaseLaunchpadButton<Vent>
     public override bool AffectedByHack => false;
     public override float Distance => 1f;
 
-    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Seal", KeyboardKeyCode.F);
-
     public override bool Enabled(RoleBehaviour? role)
     {
         return role is SealerRole;

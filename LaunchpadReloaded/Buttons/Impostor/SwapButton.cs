@@ -20,8 +20,6 @@ public class SwapButton : BaseLaunchpadButton
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
 
-    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Swap", KeyboardKeyCode.F);
-
     public override bool Enabled(RoleBehaviour? role)
     {
         return role is SwapshifterRole;

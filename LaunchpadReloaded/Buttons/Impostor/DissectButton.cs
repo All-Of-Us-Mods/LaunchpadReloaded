@@ -23,7 +23,7 @@ public class DissectButton : BaseLaunchpadButton<DeadBody>
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => false;
 
-    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Dissect", KeyboardKeyCode.V);
+    public override BaseKeybind Keybind => MiraGlobalKeybinds.SecondaryAbility;
 
     public override bool Enabled(RoleBehaviour? role)
     {

@@ -24,8 +24,6 @@ public class FreezeButton : BaseLaunchpadButton<DeadBody>
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
 
-    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Freeze", KeyboardKeyCode.F);
-
     public override bool Enabled(RoleBehaviour? role)
     {
         return role is CoronerRole;

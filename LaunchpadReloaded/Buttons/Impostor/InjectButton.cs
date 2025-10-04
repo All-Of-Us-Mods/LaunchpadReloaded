@@ -25,8 +25,6 @@ public class InjectButton : BaseLaunchpadButton<PlayerControl>
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => false;
 
-    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Inject", KeyboardKeyCode.F);
-
     public override bool Enabled(RoleBehaviour? role) => role is SurgeonRole;
 
     private PlayerControl? _injectedPlayer;

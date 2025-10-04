@@ -27,8 +27,6 @@ public class DragButton : BaseLaunchpadButton<DeadBody>
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
 
-    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Drag", KeyboardKeyCode.V);
-
     public override bool Enabled(RoleBehaviour? role)
     {
         return role is JanitorRole || OptionGroupSingleton<MedicOptions>.Instance.DragBodies && role is MedicRole;

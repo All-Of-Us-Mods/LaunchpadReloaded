@@ -21,7 +21,7 @@ public class CallButton : BaseLaunchpadButton
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => true;
 
-    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Call", KeyboardKeyCode.C);
+    public override BaseKeybind Keybind => MiraGlobalKeybinds.SecondaryAbility;
 
     public override bool Enabled(RoleBehaviour? role)
     {

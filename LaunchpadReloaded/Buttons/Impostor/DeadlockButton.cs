@@ -21,8 +21,6 @@ public class DeadlockButton : BaseLaunchpadButton
     public override LoadableAsset<Sprite> Sprite => LaunchpadAssets.DeadlockButton;
     public override bool TimerAffectedByPlayer => true;
     public override bool AffectedByHack => false;
-
-    public override BaseKeybind? Keybind { get; } = new MiraKeybind("Deadlock", KeyboardKeyCode.F);
     
     public override bool Enabled(RoleBehaviour? role) => role is HitmanRole;
 
