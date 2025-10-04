@@ -9,7 +9,7 @@ using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
 using Rewired;
 using UnityEngine;
-using Helpers = MiraAPI.Utilities.Helpers;
+using Helpers = LaunchpadReloaded.Utilities.Helpers;
 
 namespace LaunchpadReloaded.Buttons.Crewmate;
 
@@ -33,7 +33,7 @@ public class SealButton : BaseLaunchpadButton<Vent>
 
     public override Vent? GetTarget()
     {
-        return PlayerControl.LocalPlayer.GetNearestObjectOfType<Vent>(Distance, Helpers.CreateFilter(Constants.NotShipMask));
+        return PlayerControl.LocalPlayer.GetNearestObjectOfType<Vent>(Distance, Helpers.BodyFilter2D);
     }
 
     public override bool IsTargetValid(Vent? target)

@@ -10,6 +10,9 @@ namespace LaunchpadReloaded.Utilities;
 public static class Helpers
 {
     public static readonly Random Random = new();
+    
+    private static ContactFilter2D? _bodyFilter2D;
+    public static ContactFilter2D BodyFilter2D => _bodyFilter2D ??= MiraAPI.Utilities.Helpers.CreateFilter(Constants.NotShipMask);
 
     public static bool ShouldCancelClick()
     {

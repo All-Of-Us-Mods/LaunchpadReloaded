@@ -9,6 +9,7 @@ using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
 using Rewired;
 using UnityEngine;
+using Helpers = LaunchpadReloaded.Utilities.Helpers;
 
 namespace LaunchpadReloaded.Buttons.Neutral;
 
@@ -31,7 +32,7 @@ public class CollectButton : BaseLaunchpadButton<DeadBody>
 
     public override DeadBody? GetTarget()
     {
-        return PlayerControl.LocalPlayer.GetNearestObjectOfType<DeadBody>(Distance, MiraAPI.Utilities.Helpers.CreateFilter(Constants.NotShipMask), "DeadBody", IsTargetValid);
+        return PlayerControl.LocalPlayer.GetNearestObjectOfType<DeadBody>(Distance, Helpers.BodyFilter2D, "DeadBody", IsTargetValid);
     }
 
     public override bool IsTargetValid(DeadBody? target)

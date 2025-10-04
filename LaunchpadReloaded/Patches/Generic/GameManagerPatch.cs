@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using LaunchpadReloaded.Components;
+using Reactor.Utilities;
 
 namespace LaunchpadReloaded.Patches.Generic;
 
@@ -11,6 +12,7 @@ public static class GameManagerPatch
         foreach (var deadBody in __instance.deadBodyPrefab)
         {
             deadBody.gameObject.AddComponent<DeadBodyCacheComponent>();
+            Logger<LaunchpadReloadedPlugin>.Info("Added DeadBodyCacheComponent to dead body prefab");
         }
     }
 }
