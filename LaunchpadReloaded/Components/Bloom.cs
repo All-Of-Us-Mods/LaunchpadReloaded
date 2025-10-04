@@ -47,11 +47,16 @@ public class Bloom(IntPtr cppPtr) : MonoBehaviour(cppPtr)
             return;
         }
 
-        ThresholdLinear =
-            ShipStatus.Instance.TryCast<AirshipStatus>() ||
-            ShipStatus.Instance.Type is ShipStatus.MapType.Hq or ShipStatus.MapType.Fungle
-                ? 1.3f :
-                0.95f;
+        var multiplier = 1.0f;
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            multiplier = 1.45f;
+        }
+
+        ThresholdLinear = multiplier *
+                          (ShipStatus.Instance.TryCast<AirshipStatus>() ||
+                           ShipStatus.Instance.Type is ShipStatus.MapType.Hq or ShipStatus.MapType.Fungle
+                              ? 1.3f : 0.95f);
     }
 
     #region Public Properties
