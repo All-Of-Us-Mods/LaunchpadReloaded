@@ -5,18 +5,12 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Debug|Android = Debug|Android
 		Release|Any CPU = Release|Any CPU
-		Release|Android = Release|Android
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{11FBC798-BAF5-4EE5-9511-BE6DB0592F99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{11FBC798-BAF5-4EE5-9511-BE6DB0592F99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11FBC798-BAF5-4EE5-9511-BE6DB0592F99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11FBC798-BAF5-4EE5-9511-BE6DB0592F99}.Release|Any CPU.Build.0 = Release|Any CPU
-		{11FBC798-BAF5-4EE5-9511-BE6DB0592F99}.Debug|Android.ActiveCfg = Debug|Android
-		{11FBC798-BAF5-4EE5-9511-BE6DB0592F99}.Debug|Android.Build.0 = Debug|Android
-		{11FBC798-BAF5-4EE5-9511-BE6DB0592F99}.Release|Android.ActiveCfg = Release|Android
-		{11FBC798-BAF5-4EE5-9511-BE6DB0592F99}.Release|Android.Build.0 = Release|Android
 	EndGlobalSection
 EndGlobal

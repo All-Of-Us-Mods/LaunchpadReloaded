@@ -1,6 +1,7 @@
 ﻿using System;
 using Discord;
 using HarmonyLib;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace LaunchpadReloaded.Patches.Generic;
@@ -11,27 +12,21 @@ namespace LaunchpadReloaded.Patches.Generic;
 [HarmonyPatch]
 public static class DiscordManagerPatch
 {
+    private const long ClientId = 1217217004474339418;
+    private const uint SteamAppId = 945360;
+
     [HarmonyPrefix]
     [HarmonyPatch(typeof(DiscordManager), nameof(DiscordManager.Start))]
     public static bool DiscordManagerStartPrefix(DiscordManager __instance)
     {
-        DiscordManager.ClientId = 1217217004474339418;
-#if ANDROID
-        return true;
-#else
-
-        __instance.presence = new Discord.Discord(1217217004474339418, 1UL);
-        var activityManager = __instance.presence.GetActivityManager();
-
-        activityManager.RegisterSteam(945360U);
-        activityManager.add_OnActivityJoin((Action<string>)__instance.HandleJoinRequest);
-        SceneManager.add_sceneLoaded((Action<Scene, LoadSceneMode>)((scene, _)=>
+        DiscordManager.ClientId = ClientId;
+        if (Application.platform == RuntimePlatform.Android)
         {
-            __instance.OnSceneChange(scene.name);
-        }));
-        __instance.SetInMenus();
+            return true;
+        }
+
+        InitializeDiscord(__instance);
         return false;
-#endif
     }
 
     [HarmonyPrefix]
@@ -40,5 +35,19 @@ public static class DiscordManagerPatch
     {
         activity.Details += " All Of Us: Launchpad";
         activity.State += " | dsc.gg/allofus";
+    }
+
+    private static void InitializeDiscord(DiscordManager __instance)
+    {
+        __instance.presence = new Discord.Discord(ClientId, 1UL);
+        var activityManager = __instance.presence.GetActivityManager();
+
+        activityManager.RegisterSteam(SteamAppId);
+        activityManager.add_OnActivityJoin((Action<string>)__instance.HandleJoinRequest);
+        SceneManager.add_sceneLoaded((Action<Scene, LoadSceneMode>)((scene, _) =>
+        {
+            __instance.OnSceneChange(scene.name);
+        }));
+        __instance.SetInMenus();
     }
 }
