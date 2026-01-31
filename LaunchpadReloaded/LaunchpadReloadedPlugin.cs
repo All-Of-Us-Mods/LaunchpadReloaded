@@ -1,4 +1,5 @@
-﻿using BepInEx;
+﻿global using static Reactor.Utilities.Logger<LaunchpadReloaded.LaunchpadReloadedPlugin>;
+using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;

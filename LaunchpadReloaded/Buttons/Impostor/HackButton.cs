@@ -1,11 +1,13 @@
 ﻿using LaunchpadReloaded.Features;
 using LaunchpadReloaded.Modifiers;
+using LaunchpadReloaded.Networking;
 using LaunchpadReloaded.Options.Roles.Impostor;
 using LaunchpadReloaded.Roles.Impostor;
 using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
 using MiraAPI.Utilities.Assets;
+using Reactor.Networking.Attributes;
 using UnityEngine;
 
 namespace LaunchpadReloaded.Buttons.Impostor;
@@ -24,6 +26,18 @@ public class HackButton : BaseLaunchpadButton
 
     protected override void OnClick()
     {
+        RpcHackPlayers(PlayerControl.LocalPlayer);
+    }
+
+    [MethodRpc((ushort)LaunchpadRpc.Hack)]
+    public static void RpcHackPlayers(PlayerControl hacker)
+    {
+        if (hacker.Data.Role is not HackerRole)
+        {
+            hacker.KickForCheating();
+            return;
+        }
+
         foreach (var player in PlayerControl.AllPlayerControls)
         {
             if (player.Data.IsDead || player.Data.Disconnected)
@@ -31,9 +45,7 @@ public class HackButton : BaseLaunchpadButton
                 continue;
             }
 
-            player.RpcAddModifier<HackedModifier>();
+            player.AddModifier<HackedModifier>();
         }
-
-        PlayerControl.LocalPlayer.RawSetColor(15);
     }
 }

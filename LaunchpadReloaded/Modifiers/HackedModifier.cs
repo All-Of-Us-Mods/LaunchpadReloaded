@@ -6,10 +6,10 @@ using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
 using MiraAPI.Modifiers.Types;
 using MiraAPI.Networking;
-using Reactor.Utilities;
 using Reactor.Utilities.Extensions;
 using System;
 using System.Collections;
+using BepInEx.Unity.IL2CPP.Utils.Collections;
 using TMPro;
 using UnityEngine;
 using Helpers = LaunchpadReloaded.Utilities.Helpers;
@@ -32,50 +32,12 @@ public class HackedModifier : TimedModifier
     private HackNodeComponent? _lastCloseNode;
     private HackNodeComponent? _closestNode;
 
-    public override void FixedUpdate()
-    {
-        base.FixedUpdate();
-
-        IsImpostor = Player!.Data.Role.IsImpostor;
-
-        var randomString = MiraAPI.Utilities.Helpers.RandomString(Helpers.Random.Next(4, 6),
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#!?$(???#@)$@@@@0000");
-        Player!.cosmetics.SetName(randomString);
-        Player.cosmetics.SetNameMask(true);
-
-        if (Player.cosmetics.gameObject.activeSelf)
-        {
-            Player.cosmetics.gameObject.SetActive(false);
-        }
-
-        if (!Player.AmOwner)
-        {
-            return;
-        }
-
-        _closestNode = MiraAPI.Utilities.Helpers.FindClosestObjectOfType(HackNodeComponent.AllNodes, PlayerControl.LocalPlayer.transform.position);
-
-        if (_closestNode != null && _lastCloseNode != _closestNode)
-        {
-            foreach (var node in HackNodeComponent.AllNodes)
-            {
-                node.SetArrowActive(false);
-            }
-            _closestNode.SetArrowActive(true);
-        }
-
-        _lastCloseNode = _closestNode;
-
-        if (_hackedText != null)
-        {
-            _hackedText.text = $"Find a node on the map to unhack!\nIf you don't unhack in time, <b>YOU WILL DIE.</b>\n<size=70%>{Math.Round(TimeRemaining, 0)} seconds remaining.</size>";
-        }
-    }
+    private Coroutine? _hackEffectCoroutine;
 
     public override void OnActivate()
     {
-        GradientManager.SetGradientEnabled(Player!, false);
-        Player!.cosmetics.SetColor(15);
+        GradientManager.SetGradientEnabled(Player, false);
+        Player.cosmetics.SetColor(15);
 
         if (Player.cosmetics.CurrentPet != null)
         {
@@ -107,14 +69,54 @@ public class HackedModifier : TimedModifier
             return;
         }
 
-        Coroutines.Start(HackEffect());
+        _hackEffectCoroutine = Player.StartCoroutine(HackEffect().WrapToIl2Cpp());
+    }
+
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        IsImpostor = Player.Data.Role.IsImpostor;
+
+        var randomString = MiraAPI.Utilities.Helpers.RandomString(Helpers.Random.Next(4, 6),
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#!?$(???#@)$@@@@0000");
+        Player.cosmetics.SetName(randomString);
+        Player.cosmetics.SetNameMask(true);
+
+        if (Player.cosmetics.gameObject.activeSelf)
+        {
+            Player.cosmetics.gameObject.SetActive(false);
+        }
+
+        if (!Player.AmOwner)
+        {
+            return;
+        }
+
+        _closestNode = MiraAPI.Utilities.Helpers.FindClosestObjectOfType(HackNodeComponent.AllNodes, PlayerControl.LocalPlayer.transform.position);
+
+        if (_closestNode != null && _lastCloseNode != _closestNode)
+        {
+            foreach (var node in HackNodeComponent.AllNodes)
+            {
+                node.SetArrowActive(false);
+            }
+            _closestNode.SetArrowActive(true);
+        }
+
+        _lastCloseNode = _closestNode;
+
+        if (_hackedText != null)
+        {
+            _hackedText.text = $"Find a node on the map to unhack!\nIf you don't unhack in time, <b>YOU WILL DIE.</b>\n<size=70%>{Math.Round(TimeRemaining, 0)} seconds remaining.</size>";
+        }
     }
 
     public override void OnDeactivate()
     {
         DeActivating = true;
-        GradientManager.SetGradientEnabled(Player!, true);
-        Player!.cosmetics.SetColor((byte)Player.Data.DefaultOutfit.ColorId);
+        GradientManager.SetGradientEnabled(Player, true);
+        Player.cosmetics.SetColor((byte)Player.Data.DefaultOutfit.ColorId);
 
         if (Player.cosmetics.CurrentPet != null)
         {
@@ -140,12 +142,12 @@ public class HackedModifier : TimedModifier
             _hackedText.gameObject.DestroyImmediate();
         }
 
-        if (IsImpostor)
+        if (_hackEffectCoroutine == null)
         {
             return;
         }
 
-        Coroutines.Stop(HackEffect());
+        Player.StopCoroutine(_hackEffectCoroutine);
     }
 
     public override void OnDeath(DeathReason reason)

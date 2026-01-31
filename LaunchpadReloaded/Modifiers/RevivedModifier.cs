@@ -24,7 +24,7 @@ public class RevivedModifier : BaseModifier
 
     public override void OnActivate()
     {
-        var tagManager = Player!.GetTagManager();
+        var tagManager = Player.GetTagManager();
 
         if (tagManager != null)
         {
@@ -37,15 +37,15 @@ public class RevivedModifier : BaseModifier
             tagManager.AddTag(_revivedTag);
         }
 
-        _ogVisorColor = Player!.cosmetics.currentBodySprite.BodySprite.material.GetColor(_visorColor);
-        Player!.cosmetics.currentBodySprite.BodySprite.material.SetColor(_visorColor, LaunchpadPalette.MedicColor);
+        _ogVisorColor = Player.cosmetics.currentBodySprite.BodySprite.material.GetColor(_visorColor);
+        Player.cosmetics.currentBodySprite.BodySprite.material.SetColor(_visorColor, LaunchpadPalette.MedicColor);
 
         if (!Player.Data.IsDead)
         {
             return;
         }
 
-        Player!.Revive();
+        Player.Revive();
 
         Player.RemainingEmergencies = GameManager.Instance.LogicOptions.GetNumEmergencyMeetings();
         RoleManager.Instance.SetRole(Player, RoleTypes.Crewmate);
@@ -82,7 +82,7 @@ public class RevivedModifier : BaseModifier
     {
         if (MeetingHud.Instance)
         {
-            var playerState = MeetingHud.Instance.playerStates.First(plr => plr.TargetPlayerId == Player!.PlayerId);
+            var playerState = MeetingHud.Instance.playerStates.First(plr => plr.TargetPlayerId == Player.PlayerId);
             if (playerState is null)
             {
                 return;

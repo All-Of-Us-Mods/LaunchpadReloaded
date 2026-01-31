@@ -54,7 +54,16 @@ public static class HackerUtilities
 
     public static bool AnyPlayerHacked()
     {
-        return PlayerControl.AllPlayerControls.ToArray().Any(PlayerHacked);
+        // Avoid LINQ for performance
+        foreach (var player in PlayerControl.AllPlayerControls)
+        {
+            if (PlayerHacked(player))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static bool IsHacked(this NetworkedPlayerInfo playerInfo)
