@@ -47,11 +47,7 @@ public class Bloom(IntPtr cppPtr) : MonoBehaviour(cppPtr)
             return;
         }
 
-        var multiplier = 1.0f;
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            multiplier = 1.45f;
-        }
+        var multiplier = OperatingSystem.IsAndroid() ? 1.45f : 1.0f;
 
         ThresholdLinear = multiplier *
                           (ShipStatus.Instance.TryCast<AirshipStatus>() ||

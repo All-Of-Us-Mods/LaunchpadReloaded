@@ -20,7 +20,7 @@ public static class DiscordManagerPatch
     public static bool DiscordManagerStartPrefix(DiscordManager __instance)
     {
         DiscordManager.ClientId = ClientId;
-        if (Application.platform == RuntimePlatform.Android)
+        if (OperatingSystem.IsAndroid())
         {
             return true;
         }
