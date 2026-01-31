@@ -6,8 +6,6 @@ using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
 using MiraAPI.Utilities.Assets;
 using System.Linq;
-using MiraAPI.Keybinds;
-using Rewired;
 using UnityEngine;
 
 namespace LaunchpadReloaded.Buttons.Impostor;

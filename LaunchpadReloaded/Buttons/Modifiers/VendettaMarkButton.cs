@@ -3,12 +3,10 @@ using LaunchpadReloaded.Features;
 using LaunchpadReloaded.Modifiers;
 using LaunchpadReloaded.Options.Modifiers.Crewmate;
 using MiraAPI.GameOptions;
-using MiraAPI.Keybinds;
 using MiraAPI.Modifiers;
 using MiraAPI.PluginLoading;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
-using Rewired;
 using UnityEngine;
 
 namespace LaunchpadReloaded.Buttons.Modifiers;

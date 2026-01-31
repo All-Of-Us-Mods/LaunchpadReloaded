@@ -6,11 +6,9 @@ using LaunchpadReloaded.Roles.Crewmate;
 using LaunchpadReloaded.Roles.Impostor;
 using LaunchpadReloaded.Utilities;
 using MiraAPI.GameOptions;
-using MiraAPI.Keybinds;
 using MiraAPI.Modifiers;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
-using Rewired;
 using UnityEngine;
 using Helpers = LaunchpadReloaded.Utilities.Helpers;
 

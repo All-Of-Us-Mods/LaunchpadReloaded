@@ -3,9 +3,7 @@ using LaunchpadReloaded.Options.Roles.Impostor;
 using LaunchpadReloaded.Roles.Impostor;
 using MiraAPI.GameOptions;
 using MiraAPI.Hud;
-using MiraAPI.Keybinds;
 using MiraAPI.Utilities.Assets;
-using Rewired;
 using UnityEngine;
 
 namespace LaunchpadReloaded.Buttons.Impostor;

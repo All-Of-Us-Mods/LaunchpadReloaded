@@ -5,9 +5,7 @@ using LaunchpadReloaded.Roles.Crewmate;
 using MiraAPI.GameOptions;
 using MiraAPI.Utilities.Assets;
 using System.Linq;
-using MiraAPI.Keybinds;
 using MiraAPI.Modifiers;
-using Rewired;
 using UnityEngine;
 
 namespace LaunchpadReloaded.Buttons.Crewmate;

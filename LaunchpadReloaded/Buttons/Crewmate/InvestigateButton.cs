@@ -5,7 +5,6 @@ using LaunchpadReloaded.Utilities;
 using MiraAPI.Keybinds;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
-using Rewired;
 using UnityEngine;
 using Helpers = LaunchpadReloaded.Utilities.Helpers;
 

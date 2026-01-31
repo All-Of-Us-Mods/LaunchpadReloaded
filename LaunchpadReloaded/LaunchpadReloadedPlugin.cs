@@ -2,7 +2,6 @@
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
-using LaunchpadReloaded.Features;
 using LaunchpadReloaded.Patches;
 using MiraAPI;
 using MiraAPI.PluginLoading;

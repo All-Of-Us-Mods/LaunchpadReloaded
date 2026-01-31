@@ -1,7 +1,6 @@
 ﻿using System;
 using Discord;
 using HarmonyLib;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace LaunchpadReloaded.Patches.Generic;
