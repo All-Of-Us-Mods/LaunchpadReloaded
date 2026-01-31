@@ -73,7 +73,7 @@ public class FootstepsModifier : BaseModifier
         sprite.material = LaunchpadAssets.GradientMaterial.LoadAsset();
         footstep.layer = LayerMask.NameToLayer("Players");
 
-        if (_lastFlip == false)
+        if (!_lastFlip)
         {
             _lastFlip = true;
             sprite.flipX = true;

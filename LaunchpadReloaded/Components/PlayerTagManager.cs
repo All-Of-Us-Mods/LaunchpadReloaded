@@ -110,7 +110,7 @@ public class PlayerTagManager(IntPtr ptr) : MonoBehaviour(ptr)
             var visible = tagPair.Key.IsLocallyVisible(player)
                           && (_inMeeting ? voteArea!.NameText.gameObject.active : player.cosmetics.nameText.gameObject.active);
 
-            if (tagPair.Value.active == false && visible)
+            if (!tagPair.Value.active && visible)
             {
                 UpdatePosition();
             }
