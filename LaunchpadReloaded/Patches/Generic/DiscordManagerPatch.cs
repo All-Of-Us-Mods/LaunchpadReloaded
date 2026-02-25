@@ -11,7 +11,7 @@ namespace LaunchpadReloaded.Patches.Generic;
 [HarmonyPatch]
 public static class DiscordManagerPatch
 {
-    private const long ClientId = 1217217004474339418;
+    private const long ClientId = 826619210205626378;
     private const uint SteamAppId = 945360;
 
     [HarmonyPrefix]
@@ -38,15 +38,15 @@ public static class DiscordManagerPatch
 
     private static void InitializeDiscord(DiscordManager __instance)
     {
-        __instance.presence = new Discord.Discord(ClientId, 1UL);
+        __instance.presence = new Discord.Discord(ClientId, (ulong)CreateFlags.NoRequireDiscord);
         var activityManager = __instance.presence.GetActivityManager();
 
         activityManager.RegisterSteam(SteamAppId);
         activityManager.add_OnActivityJoin((Action<string>)__instance.HandleJoinRequest);
+        __instance.SetInMenus();
         SceneManager.add_sceneLoaded((Action<Scene, LoadSceneMode>)((scene, _) =>
         {
             __instance.OnSceneChange(scene.name);
         }));
-        __instance.SetInMenus();
     }
 }
