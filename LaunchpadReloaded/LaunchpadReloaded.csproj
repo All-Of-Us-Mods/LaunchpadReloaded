@@ -3,7 +3,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <DebugType>embedded</DebugType>
-        <Version>0.3.7</Version>
+        <Version>0.3.8</Version>
         <Description>Launchpad Mod for new roles and gamemodes</Description>
         <Authors>XtraCube, angxlwtf, Daemon</Authors>
         <Nullable>enable</Nullable>
