@@ -12,7 +12,7 @@
     </PropertyGroup>
     
     <ItemGroup>
-        <PackageReference Include="AllOfUs.MiraAPI" Version="0.3.6" />
+        <PackageReference Include="AllOfUs.MiraAPI" Version="0.3.8" />
         <PackageReference Include="Reactor" Version="2.3.1" />
         <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.735" Private="false" ExcludeAssets="runtime;native" />
         <PackageReference Include="AmongUs.GameLibs.Steam" Version="2025.11.18" PrivateAssets="all" />
@@ -27,7 +27,6 @@
         <EmbeddedResource Include="Resources/launchpad-assets-android.bundle" />
         <EmbeddedResource Include="Resources/**/*.png" />
     </ItemGroup>
-    
 
     <Target Name="Copy" AfterTargets="Build" Condition="'$(AmongUs)' != ''">
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AmongUs)/BepInEx/plugins/" />
