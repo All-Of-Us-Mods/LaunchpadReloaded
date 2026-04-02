@@ -33,9 +33,11 @@ public class HackedModifier : TimedModifier
     private HackNodeComponent? _closestNode;
 
     private Coroutine? _hackEffectCoroutine;
+    private bool _killTriggered;
 
     public override void OnActivate()
     {
+        _killTriggered = false;
         GradientManager.SetGradientEnabled(Player, false);
         Player.cosmetics.SetColor(15);
 
@@ -109,6 +111,12 @@ public class HackedModifier : TimedModifier
         if (_hackedText != null)
         {
             _hackedText.text = $"Find a node on the map to unhack!\nIf you don't unhack in time, <b>YOU WILL DIE.</b>\n<size=70%>{Math.Round(TimeRemaining, 0)} seconds remaining.</size>";
+        }
+
+        if (!_killTriggered && !DeActivating && TimeRemaining <= 0f)
+        {
+            _killTriggered = true;
+            PlayerControl.LocalPlayer.RpcCustomMurder(PlayerControl.LocalPlayer, resetKillTimer: false, createDeadBody: true, teleportMurderer: false, showKillAnim: false, playKillSound: true);
         }
     }
 
@@ -204,9 +212,20 @@ public class HackedModifier : TimedModifier
 
     public override void OnTimerComplete()
     {
-        if (Player != null && !TutorialManager.InstanceExists)
+        if (Player == null || TutorialManager.InstanceExists)
         {
-            Player.RpcCustomMurder(Player, true, false, false, false, false);
+            return;
+        }
+
+        if (Player.AmOwner)
+        {
+            PlayerControl.LocalPlayer.RpcCustomMurder(PlayerControl.LocalPlayer, resetKillTimer: false, createDeadBody: true, teleportMurderer: false, showKillAnim: false, playKillSound: true);
+            return;
+        }
+
+        if (AmongUsClient.Instance.AmHost)
+        {
+            PlayerControl.LocalPlayer.RpcCustomMurder(Player, resetKillTimer: false, createDeadBody: true, teleportMurderer: false, showKillAnim: false, playKillSound: true);
         }
     }
 }

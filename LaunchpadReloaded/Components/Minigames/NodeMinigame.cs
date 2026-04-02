@@ -4,6 +4,7 @@ using LaunchpadReloaded.Modifiers;
 using MiraAPI.Modifiers;
 using Reactor.Utilities.Attributes;
 using Reactor.Utilities.Extensions;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,9 +20,11 @@ public class NodeMinigame(nint ptr) : Minigame(ptr)
     private HackNodeComponent _node = null!;
     private readonly Controller _myController = new();
     private int _sliderId;
+    private bool _initialized;
 
     public void Open(HackNodeComponent node)
     {
+        EnsureInitialized();
         _node = node;
         nodeIdText.text = $"node_{node.id}";
 
@@ -32,11 +35,27 @@ public class NodeMinigame(nint ptr) : Minigame(ptr)
 
     private void Awake()
     {
-        var miniGame = GetComponent<DivertPowerMinigame>();
-        sliders = miniGame.Sliders;
-        OpenSound = miniGame.OpenSound;
-        CloseSound = miniGame.CloseSound;
-        miniGame.Destroy();
+        EnsureInitialized();
+    }
+
+    private void EnsureInitialized()
+    {
+        if (_initialized)
+        {
+            return;
+        }
+
+        if (miniGame != null)
+        {
+            sliders = miniGame.Sliders ?? Array.Empty<Collider2D>();
+            OpenSound = miniGame.OpenSound;
+            CloseSound = miniGame.CloseSound;
+            miniGame.Destroy();
+        }
+        else
+        {
+            sliders = Array.Empty<Collider2D>();
+        }
 
         _sliderId = 0;
 
@@ -62,6 +81,8 @@ public class NodeMinigame(nint ptr) : Minigame(ptr)
                 sliders[i].GetComponent<SpriteRenderer>().color = new Color(0, 0.5188679f, 0.1322604f);
             }
         }
+
+        _initialized = true;
     }
 
     private void FixedUpdate()
@@ -83,7 +104,7 @@ public class NodeMinigame(nint ptr) : Minigame(ptr)
         }
 
 
-        if (_sliderId == sliders.Length)
+        if (sliders.Length == 0 || _sliderId == sliders.Length)
         {
             return;
         }

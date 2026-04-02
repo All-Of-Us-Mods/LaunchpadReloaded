@@ -20,8 +20,13 @@ public class ButtonPatches
             .Where(method => method.Name == "DoClick");
     }
 
-    public static bool Prefix()
+    public static bool Prefix(ActionButton __instance)
     {
+        if (__instance is UseButton)
+        {
+            return true;
+        }
+
         return !Helpers.ShouldCancelClick();
     }
 }

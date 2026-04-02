@@ -189,12 +189,22 @@ public static class GenericEvents
 
         if (PlayerControl.LocalPlayer.Data.IsHacked() && @event.IsPrimaryConsole && !@event.Usable.IsSabotageConsole())
         {
+            if (@event.Usable.TryCast<HackNodeComponent>())
+            {
+                return;
+            }
+
             @event.Cancel();
             return;
         }
 
         if (HackerUtilities.AnyPlayerHacked() && !@event.Usable.IsSabotageConsole() && (@event.Usable.TryCast<SystemConsole>() || @event.Usable.TryCast<MapConsole>()))
         {
+            if (@event.Usable.TryCast<HackNodeComponent>())
+            {
+                return;
+            }
+
             @event.Cancel();
         }
     }
