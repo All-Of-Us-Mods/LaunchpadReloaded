@@ -45,6 +45,7 @@ public class NodeMinigame(nint ptr) : Minigame(ptr)
             return;
         }
 
+        var miniGame = GetComponent<DivertPowerMinigame>() ?? GetComponentInChildren<DivertPowerMinigame>(true);
         if (miniGame != null)
         {
             sliders = miniGame.Sliders ?? Array.Empty<Collider2D>();
