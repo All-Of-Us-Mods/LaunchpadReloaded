@@ -3,6 +3,7 @@ using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
+using LaunchpadReloaded.Modules.Localization;
 using LaunchpadReloaded.Patches;
 using MiraAPI;
 using MiraAPI.PluginLoading;
@@ -32,6 +33,8 @@ public partial class LaunchpadReloadedPlugin : BasePlugin, IMiraPlugin
 
     public override void Load()
     {
+        LaunchpadLocale.Initialize();
+
         Harmony.PatchAll();
 
         ReactorCredits.Register("Launchpad", Version, true, ReactorCredits.AlwaysShow);

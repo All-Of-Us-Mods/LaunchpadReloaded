@@ -26,6 +26,7 @@
         <EmbeddedResource Include="Resources/launchpad-assets-win.bundle" />
         <EmbeddedResource Include="Resources/launchpad-assets-android.bundle" />
         <EmbeddedResource Include="Resources/**/*.png" />
+        <EmbeddedResource Include="Resources/Locale/*.xml" />
     </ItemGroup>
 
     <Target Name="Copy" AfterTargets="Build" Condition="'$(AmongUs)' != ''">
