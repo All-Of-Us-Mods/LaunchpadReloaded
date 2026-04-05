@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="RoleReaperName">Reaper</string>
+  <string name="RoleReaperDescription">Collect souls to win</string>
+  <string name="RoleReaperLongDescription">Collect souls from dead bodies to win the game.</string>
+  <string name="RoleReaperTabSouls">%count%/%total% souls collected.</string>
+
+  <string name="RoleJesterName">Jester</string>
+  <string name="RoleJesterDescription">Get ejected to win</string>
+  <string name="RoleJesterLongDescription">Convince the crew to vote you out by being suspicious.<nl>If you get voted out, you win the game.</string>
+  <string name="RoleJesterEjectionMessage">You've been fooled! %player% was The Jester.</string>
+
+  <string name="RoleExecutionerName">Executioner</string>
+  <string name="RoleExecutionerTargetFallback">your target</string>
+  <string name="RoleExecutionerDescription">Get <b>%target%</b> voted out to win.</string>
+  <string name="RoleExecutionerLongDescription">Get <b>%target%</b> voted out to win.</string>
+  <string name="RoleExecutionerTargetTag">Target</string>
+
+  <string name="RoleBurrowerName">Burrower</string>
+  <string name="RoleBurrowerDescription">Create vents around the map.</string>
+  <string name="RoleBurrowerLongDescription">Move around the map easier<nl>By digging new vents.</string>
+
+  <string name="RoleHackerName">Hacker</string>
+  <string name="RoleHackerDescription">Hack meetings and sabotage the crewmates</string>
+  <string name="RoleHackerLongDescription">Hack crewmates and make them unable to do tasks<nl>And view the admin map from anywhere!</string>
+
+  <string name="RoleHitmanName">Hitman</string>
+  <string name="RoleHitmanDescription">Slow down time and kill the Crewmates.</string>
+  <string name="RoleHitmanLongDescription">Slow down time and kill the Crewmates.<nl>You can kill multiple players at once.</string>
+
+  <string name="RoleJanitorName">Janitor</string>
+  <string name="RoleJanitorDescription">Drag bodies and hide them in vents</string>
+  <string name="RoleJanitorLongDescription">You can drag bodies and hide them in vents<nl>Which will cause them to disappear unless the vent is used.</string>
+
+  <string name="RoleSurgeonName">Surgeon</string>
+  <string name="RoleSurgeonDescription">Poison other players and dissect bodies</string>
+  <string name="RoleSurgeonLongDescription">You can poison players resulting in their death<nl>and you can dissect bodies to make them unreportable.</string>
+
+  <string name="RoleSwapshifterName">Swapshifter</string>
+  <string name="RoleSwapshifterDescription">Shift and swap into other players.</string>
+  <string name="RoleSwapshifterLongDescription">Shift and swap into other players.<nl>This can help you frame players and disguise kills.</string>
+  
+  <string name="RoleCaptainName">Captain</string>
+  <string name="RoleCaptainDescription">Protect the crew with your abilities</string>
+  <string name="RoleCaptainLongDescription">Use your zoom ability to keep an eye on the crew<nl>And call meetings from any location!</string>
+
+  <string name="RoleCoronerName">Coroner</string>
+  <string name="RoleCoronerDescription">Freeze bodies to prevent them from disappearing.</string>
+  <string name="RoleCoronerLongDescription">Freeze bodies to prevent them from disappearing.</string>
+
+  <string name="RoleGamblerName">Gambler</string>
+  <string name="RoleGamblerDescription">Guess a player's role to reveal it!</string>
+  <string name="RoleGamblerLongDescription">Guess a player's role to reveal it!<nl>However, if you get it incorrect, you will die.</string>
+
+  <string name="RoleDetectiveName">Detective</string>
+  <string name="RoleDetectiveDescription">Investigate and find clues on murders.</string>
+  <string name="RoleDetectiveLongDescription">Investigate bodies to get clues and use your instinct ability<nl>to see recent footsteps around you!</string>
+
+  <string name="RoleMedicName">Medic</string>
+  <string name="RoleMedicDescription">Help the crewmates by reviving dead players.</string>
+  <string name="RoleMedicLongDescription">Use your revive ability to bring dead bodies<nl>back to life!</string>
+
+  <string name="RoleSealerName">Sealer</string>
+  <string name="RoleSealerDescription">Seal vents around the map.</string>
+  <string name="RoleSealerLongDescription">Seal vents around the map.<nl>This will prevent anyone from entering the vent.</string>
+
+  <string name="RoleSheriffName">Sheriff</string>
+  <string name="RoleSheriffDescription">Take your chance by shooting a player.</string>
+  <string name="RoleSheriffLongDescription">You can shoot players, if you shoot an %impostor% you will kill him<nl>but if you shoot a %crewmate%, you will die with him.</string>
+</resources>

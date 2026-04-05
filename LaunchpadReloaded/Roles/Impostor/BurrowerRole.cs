@@ -1,5 +1,6 @@
 ﻿using Il2CppInterop.Runtime.Attributes;
 using LaunchpadReloaded.Features;
+using LaunchpadReloaded.Modules.Localization;
 using MiraAPI.Roles;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,10 @@ namespace LaunchpadReloaded.Roles.Impostor;
 
 public class BurrowerRole(IntPtr ptr) : ImpostorRole(ptr), ICustomRole
 {
-    public string RoleName => "Burrower";
-    public string RoleDescription => "Create vents around the map.";
-    public string RoleLongDescription => "Move around the map easier\nBy digging new vents.";
+    public string LocaleKey => "Burrower";
+    public string RoleName => LaunchpadLocale.GetParsed($"Role{LocaleKey}Name");
+    public string RoleDescription => LaunchpadLocale.GetParsed($"Role{LocaleKey}Description");
+    public string RoleLongDescription => LaunchpadLocale.GetParsed($"Role{LocaleKey}LongDescription");
     public Color RoleColor => LaunchpadPalette.BurrowerColor;
     public ModdedRoleTeams Team => ModdedRoleTeams.Impostor;
     public CustomRoleConfiguration Configuration => new(this)

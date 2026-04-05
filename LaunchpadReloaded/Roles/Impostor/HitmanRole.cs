@@ -1,5 +1,6 @@
 ﻿using LaunchpadReloaded.Buttons.Impostor;
 using LaunchpadReloaded.Features;
+using LaunchpadReloaded.Modules.Localization;
 using LaunchpadReloaded.Utilities;
 using MiraAPI.Hud;
 using MiraAPI.Roles;
@@ -13,9 +14,10 @@ namespace LaunchpadReloaded.Roles.Impostor;
 
 public class HitmanRole(IntPtr ptr) : ImpostorRole(ptr), ICustomRole
 {
-    public string RoleName => "Hitman";
-    public string RoleDescription => "Slow down time and kill the Crewmates.";
-    public string RoleLongDescription => "Slow down time and kill the Crewmates.\nYou can kill multiple players at once.";
+    public string LocaleKey => "Hitman";
+    public string RoleName => LaunchpadLocale.GetParsed($"Role{LocaleKey}Name");
+    public string RoleDescription => LaunchpadLocale.GetParsed($"Role{LocaleKey}Description");
+    public string RoleLongDescription => LaunchpadLocale.GetParsed($"Role{LocaleKey}LongDescription");
     public Color RoleColor => LaunchpadPalette.HitmanColor;
     public ModdedRoleTeams Team => ModdedRoleTeams.Impostor;
     public CustomRoleConfiguration Configuration => new(this)
