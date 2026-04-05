@@ -1,5 +1,6 @@
 using LaunchpadReloaded.Buttons.Crewmate;
 using LaunchpadReloaded.Features;
+using LaunchpadReloaded.Modules.Localization;
 using MiraAPI.Hud;
 using MiraAPI.Roles;
 using System;
@@ -9,9 +10,10 @@ namespace LaunchpadReloaded.Roles.Crewmate;
 
 public class CaptainRole(IntPtr ptr) : CrewmateRole(ptr), ICustomRole
 {
-    public string RoleName => "Captain";
-    public string RoleDescription => "Protect the crew with your abilities";
-    public string RoleLongDescription => "Use your zoom ability to keep an eye on the crew\n And call meetings from any location!";
+    public string LocaleKey => "Captain";
+    public string RoleName => LaunchpadLocale.GetParsed($"Role{LocaleKey}Name");
+    public string RoleDescription => LaunchpadLocale.GetParsed($"Role{LocaleKey}Description");
+    public string RoleLongDescription => LaunchpadLocale.GetParsed($"Role{LocaleKey}LongDescription");
     public Color RoleColor => LaunchpadPalette.CaptainColor;
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;
     public CustomRoleConfiguration Configuration => new(this)

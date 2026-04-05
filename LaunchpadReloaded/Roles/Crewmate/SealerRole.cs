@@ -1,6 +1,7 @@
 ﻿using Il2CppInterop.Runtime.Attributes;
 using LaunchpadReloaded.Components;
 using LaunchpadReloaded.Features;
+using LaunchpadReloaded.Modules.Localization;
 using MiraAPI.Roles;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,10 @@ namespace LaunchpadReloaded.Roles.Crewmate;
 
 public class SealerRole(IntPtr ptr) : CrewmateRole(ptr), ICustomRole
 {
-    public string RoleName => "Sealer";
-    public string RoleDescription => "Seal vents around the map.";
-    public string RoleLongDescription => "Seal vents around the map.\nThis will prevent anyone from entering the vent.";
+    public string LocaleKey => "Sealer";
+    public string RoleName => LaunchpadLocale.GetParsed($"Role{LocaleKey}Name");
+    public string RoleDescription => LaunchpadLocale.GetParsed($"Role{LocaleKey}Description");
+    public string RoleLongDescription => LaunchpadLocale.GetParsed($"Role{LocaleKey}LongDescription");
     public Color RoleColor => LaunchpadPalette.SealerColor;
     public ModdedRoleTeams Team => ModdedRoleTeams.Crewmate;
     public CustomRoleConfiguration Configuration => new(this)
