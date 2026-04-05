@@ -1,8 +1,10 @@
 using System.Text;
+using System.Collections.Generic;
 using AmongUs.GameOptions;
 using Il2CppInterop.Runtime.Attributes;
 using LaunchpadReloaded.Features;
 using LaunchpadReloaded.GameOver;
+using LaunchpadReloaded.Modules.Localization;
 using LaunchpadReloaded.Options.Roles.Neutral;
 using MiraAPI.GameEnd;
 using MiraAPI.GameOptions;
@@ -13,9 +15,10 @@ namespace LaunchpadReloaded.Roles.Outcast;
 
 public class ReaperRole(System.IntPtr ptr) : RoleBehaviour(ptr), IOutcastRole
 {
-    public string RoleName => "Reaper";
-    public string RoleDescription => "Collect souls to win";
-    public string RoleLongDescription => "Collect souls from dead bodies to win the game.";
+    public string LocaleKey => "Reaper";
+    public string RoleName => LaunchpadLocale.GetParsed($"Role{LocaleKey}Name");
+    public string RoleDescription => LaunchpadLocale.GetParsed($"Role{LocaleKey}Description");
+    public string RoleLongDescription => LaunchpadLocale.GetParsed($"Role{LocaleKey}LongDescription");
     public Color RoleColor => LaunchpadPalette.ReaperColor;
     public override bool IsDead => false;
 
@@ -34,7 +37,14 @@ public class ReaperRole(System.IntPtr ptr) : RoleBehaviour(ptr), IOutcastRole
     public StringBuilder SetTabText()
     {
         var sb = CustomRoleUtils.CreateForRole(this);
-        sb.Append($"\n<b>{collectedSouls}/{OptionGroupSingleton<ReaperOptions>.Instance.SoulCollections} souls collected.");
+        sb.Append("\n<b>" + LaunchpadLocale.GetParsed(
+            $"Role{LocaleKey}TabSouls",
+            null,
+            new Dictionary<string, string>
+            {
+                { "<count>", collectedSouls.ToString() },
+                { "<total>", OptionGroupSingleton<ReaperOptions>.Instance.SoulCollections.ToString() },
+            }));
         return sb;
     }
 
