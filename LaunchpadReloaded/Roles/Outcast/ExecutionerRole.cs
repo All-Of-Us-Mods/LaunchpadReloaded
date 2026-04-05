@@ -1,8 +1,10 @@
 using System.Linq;
+using System.Collections.Generic;
 using AmongUs.GameOptions;
 using LaunchpadReloaded.Components;
 using LaunchpadReloaded.Features;
 using LaunchpadReloaded.GameOver;
+using LaunchpadReloaded.Modules.Localization;
 using LaunchpadReloaded.Options.Roles.Neutral;
 using MiraAPI.Events;
 using MiraAPI.Events.Vanilla.Gameplay;
@@ -19,9 +21,26 @@ namespace LaunchpadReloaded.Roles.Outcast;
 
 public class ExecutionerRole(System.IntPtr ptr) : RoleBehaviour(ptr), IOutcastRole
 {
-    public string RoleName => "Executioner";
-    public string RoleDescription => $"Get <b>{(target ? target!.Data.PlayerName : "your target")}</b> voted out to win.";
-    public string RoleLongDescription => RoleDescription;
+    public string LocaleKey => "Executioner";
+    public string RoleName => LaunchpadLocale.GetParsed($"Role{LocaleKey}Name");
+    public string RoleDescription
+    {
+        get
+        {
+            var targetName = target
+                ? target!.Data.PlayerName
+                : LaunchpadLocale.GetParsed($"Role{LocaleKey}TargetFallback");
+
+            return LaunchpadLocale.GetParsed(
+                $"Role{LocaleKey}Description",
+                null,
+                new Dictionary<string, string>
+                {
+                    { "<target>", targetName },
+                });
+        }
+    }
+    public string RoleLongDescription => LaunchpadLocale.GetParsed($"Role{LocaleKey}LongDescription");
     public Color RoleColor => LaunchpadPalette.ExecutionerColor;
     public override bool IsDead => false;
 
@@ -35,7 +54,7 @@ public class ExecutionerRole(System.IntPtr ptr) : RoleBehaviour(ptr), IOutcastRo
     private static readonly PlayerTag TargetTag = new()
     {
         Name = "ExeTarget",
-        Text = "Target",
+        Text = LaunchpadLocale.GetParsed("RoleExecutionerTargetTag"),
         Color = LaunchpadPalette.ExecutionerColor.LightenColor(),
         IsLocallyVisible = _ => true,
     };

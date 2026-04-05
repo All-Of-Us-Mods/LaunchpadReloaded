@@ -1,7 +1,9 @@
 using AmongUs.GameOptions;
 using Il2CppSystem.Text;
+using System.Collections.Generic;
 using LaunchpadReloaded.Features;
 using LaunchpadReloaded.GameOver;
+using LaunchpadReloaded.Modules.Localization;
 using LaunchpadReloaded.Options.Roles.Neutral;
 using MiraAPI.GameEnd;
 using MiraAPI.GameOptions;
@@ -12,9 +14,10 @@ namespace LaunchpadReloaded.Roles.Outcast;
 
 public class JesterRole(System.IntPtr ptr) : RoleBehaviour(ptr), IOutcastRole
 {
-    public string RoleName => "Jester";
-    public string RoleDescription => "Get ejected to win";
-    public string RoleLongDescription => "Convince the crew to vote you out by being suspicious.\nIf you get voted out, you win the game.";
+    public string LocaleKey => "Jester";
+    public string RoleName => LaunchpadLocale.GetParsed($"Role{LocaleKey}Name");
+    public string RoleDescription => LaunchpadLocale.GetParsed($"Role{LocaleKey}Description");
+    public string RoleLongDescription => LaunchpadLocale.GetParsed($"Role{LocaleKey}LongDescription");
     public Color RoleColor => LaunchpadPalette.JesterColor;
     public override bool IsDead => false;
 
@@ -39,7 +42,13 @@ public class JesterRole(System.IntPtr ptr) : RoleBehaviour(ptr), IOutcastRole
 
     public string GetCustomEjectionMessage(NetworkedPlayerInfo exiled)
     {
-        return $"You've been fooled! {exiled.PlayerName} was The Jester.";
+        return LaunchpadLocale.GetParsed(
+            $"Role{LocaleKey}EjectionMessage",
+            null,
+            new Dictionary<string, string>
+            {
+                { "<player>", exiled.PlayerName },
+            });
     }
 
     public override bool CanUse(IUsable usable)
