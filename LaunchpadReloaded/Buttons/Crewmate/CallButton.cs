@@ -1,4 +1,5 @@
 ﻿using LaunchpadReloaded.Features;
+using LaunchpadReloaded.Modules.Localization;
 using LaunchpadReloaded.Options.Roles.Crewmate;
 using LaunchpadReloaded.Roles.Crewmate;
 using LaunchpadReloaded.Utilities;
@@ -12,7 +13,7 @@ namespace LaunchpadReloaded.Buttons.Crewmate;
 
 public class CallButton : BaseLaunchpadButton
 {
-    public override string Name => "CALL";
+    public override string Name => LaunchpadLocale.GetParsed("CaptainCall");
     public override float Cooldown => OptionGroupSingleton<CaptainOptions>.Instance.CaptainMeetingCooldown;
     public override float EffectDuration => 0;
     public override int MaxUses => (int)OptionGroupSingleton<CaptainOptions>.Instance.CaptainMeetingCount;

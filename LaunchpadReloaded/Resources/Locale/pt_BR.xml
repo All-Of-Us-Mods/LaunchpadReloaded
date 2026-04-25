@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="RoleCaptainName">Capitão</string>
+  <string name="RoleCaptainDescription">Proteja a tripulação com suas habilidades</string>
+  <string name="RoleCaptainLongDescription">Use o zoom para ficar de olho na equipe[nl]E convoque reuniões de qualquer lugar!</string>
+
+  <string name="CaptainCall">Chamar</string>
+  <string name="CaptainZoom">Ampliação</string>
+</resources>

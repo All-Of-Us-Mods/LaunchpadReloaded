@@ -1,66 +1,112 @@
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
+using BepInEx.Configuration;
 using BepInEx.Logging;
+using MiraAPI.Roles;
 using Reactor.Localization;
-using UnityEngine;
 
 namespace LaunchpadReloaded.Modules.Localization;
 
 public static class LaunchpadLocale
 {
-    private static readonly Dictionary<SupportedLangs, Dictionary<string, string>> Translations = new();
+    private const string DefaultLocaleCode = "en_US";
+    private static readonly Dictionary<string, Dictionary<string, string>> Translations =
+        new(System.StringComparer.OrdinalIgnoreCase);
+    private static readonly Dictionary<string, string> EmbeddedLocaleFiles =
+        new(System.StringComparer.OrdinalIgnoreCase);
     private static readonly Dictionary<string, string> TmpTextList = new()
     {
-        { "<nl>", "\n" },
-        { "<and>", "&" },
+        { "[nl]", "\n" },
+        { "[and]", "&" },
     };
 
     private static bool _initialized;
     private static ManualLogSource? _logger;
+    private static ConfigEntry<string>? _selectedLocaleConfig;
 
-    public static void Initialize()
+    public static void Initialize(ConfigFile config)
     {
         if (_initialized)
         {
             return;
         }
 
-        _initialized = true;
         _logger ??= BepInEx.Logging.Logger.CreateLogSource("LaunchpadLocale");
 
-        LoadEmbeddedLocale(SupportedLangs.English, "en_US.xml");
+        DiscoverEmbeddedLocales();
+
+        _selectedLocaleConfig ??= config.Bind(
+            "Localization",
+            "Locale",
+            DefaultLocaleCode,
+            BuildLocaleConfigDescription());
+
+        LoadEmbeddedLocales();
+        ValidateConfiguredLocale();
+        _initialized = true;
+    }
+
+    public static bool IsMissingString(string? value)
+    {
+        return string.IsNullOrWhiteSpace(value) ||
+               value.Equals("STRMISS", System.StringComparison.OrdinalIgnoreCase) ||
+               value.StartsWith("STRMISS_", System.StringComparison.OrdinalIgnoreCase);
+    }
+
+    public static string ResolveRoleDisplayName(RoleBehaviour role)
+    {
+        if (role is ICustomRole customRole && !IsMissingString(customRole.RoleName))
+        {
+            return customRole.RoleName;
+        }
+
+        if (!IsMissingString(role.NiceName))
+        {
+            return role.NiceName;
+        }
+
+        if (role.IsDead)
+        {
+            return GetParsed("RoleGhostName", "Ghost");
+        }
+
+        return role.GetType().Name.Replace("Role", string.Empty);
     }
 
     public static string GetParsed(string name, string? defaultValue = null,
         Dictionary<string, string>? parseList = null)
     {
-        var currentLanguage =
-            TranslationController.InstanceExists
-                ? TranslationController.Instance.currentLanguage.languageID
-                : SupportedLangs.English;
-        return GetParsed(currentLanguage, name, defaultValue, parseList);
+        return GetParsedForLocale(GetSelectedLocaleCode(), name, defaultValue, parseList);
     }
 
     public static string GetParsed(SupportedLangs language, string name, string? defaultValue = null,
         Dictionary<string, string>? parseList = null)
     {
-        var text = defaultValue ?? "STRMISS_" + name;
+        return GetParsedForLocale(GetSelectedLocaleCode(), name, defaultValue, parseList);
+    }
 
-        if (Translations.TryGetValue(SupportedLangs.English, out var translationsEng) &&
-            translationsEng.TryGetValue(name, out var translationEng))
+    public static string GetParsedForLocale(string localeCode, string name, string? defaultValue = null,
+        Dictionary<string, string>? parseList = null)
+    {
+        var text = defaultValue ?? "STRMISS_" + name;
+        var normalizedLocaleCode = NormalizeLocaleCode(localeCode) ?? DefaultLocaleCode;
+
+        if (Translations.TryGetValue(DefaultLocaleCode, out var englishTranslations) &&
+            englishTranslations.TryGetValue(name, out var englishText))
         {
-            text = translationEng;
+            text = englishText;
         }
 
-        if (language is not SupportedLangs.English &&
-            Translations.TryGetValue(language, out var translations) &&
-            translations.TryGetValue(name, out var translation))
+        if (!normalizedLocaleCode.Equals(DefaultLocaleCode, System.StringComparison.OrdinalIgnoreCase) &&
+            Translations.TryGetValue(normalizedLocaleCode, out var localeTranslations) &&
+            localeTranslations.TryGetValue(name, out var localeText))
         {
-            text = translation;
+            text = localeText;
         }
 
         text = Regex.Replace(text, @"\%([^%]+)\%", @"<$1>");
@@ -90,7 +136,64 @@ public static class LaunchpadLocale
         return text;
     }
 
-    private static void LoadEmbeddedLocale(SupportedLangs language, string fileName)
+    private static string GetSelectedLocaleCode()
+    {
+        var configuredLocaleCode = NormalizeLocaleCode(_selectedLocaleConfig?.Value);
+        if (configuredLocaleCode != null && EmbeddedLocaleFiles.ContainsKey(configuredLocaleCode))
+        {
+            return configuredLocaleCode;
+        }
+
+        return DefaultLocaleCode;
+    }
+
+    private static void DiscoverEmbeddedLocales()
+    {
+        var assembly = Assembly.GetExecutingAssembly();
+        var resourceNames = assembly.GetManifestResourceNames()
+            .Where(name => name.StartsWith("LaunchpadReloaded.Resources.Locale.", System.StringComparison.Ordinal) &&
+                           name.EndsWith(".xml", System.StringComparison.OrdinalIgnoreCase));
+
+        EmbeddedLocaleFiles.Clear();
+
+        foreach (var resourceName in resourceNames)
+        {
+            var fileName = resourceName["LaunchpadReloaded.Resources.Locale.".Length..];
+            var localeCode = Path.GetFileNameWithoutExtension(fileName);
+            if (string.IsNullOrWhiteSpace(localeCode))
+            {
+                continue;
+            }
+
+            EmbeddedLocaleFiles[localeCode] = fileName;
+        }
+    }
+
+    private static void LoadEmbeddedLocales()
+    {
+        if (EmbeddedLocaleFiles.Count == 0)
+        {
+            _logger?.LogError("No embedded locale XML files were found.");
+            return;
+        }
+
+        if (EmbeddedLocaleFiles.TryGetValue(DefaultLocaleCode, out var defaultLocaleFile))
+        {
+            LoadEmbeddedLocale(DefaultLocaleCode, defaultLocaleFile);
+        }
+
+        foreach (var (localeCode, fileName) in EmbeddedLocaleFiles)
+        {
+            if (localeCode.Equals(DefaultLocaleCode, System.StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
+            LoadEmbeddedLocale(localeCode, fileName);
+        }
+    }
+
+    private static void LoadEmbeddedLocale(string localeCode, string fileName)
     {
         var assembly = Assembly.GetExecutingAssembly();
         var resourceName = $"LaunchpadReloaded.Resources.Locale.{fileName}";
@@ -105,12 +208,8 @@ public static class LaunchpadLocale
         using var reader = new StreamReader(resourceStream);
         var xmlContent = reader.ReadToEnd();
 
-        if (!Translations.ContainsKey(language))
-        {
-            Translations[language] = new Dictionary<string, string>();
-        }
-
-        ParseXml(xmlContent, Translations[language]);
+        Translations[localeCode] = new Dictionary<string, string>();
+        ParseXml(xmlContent, Translations[localeCode]);
     }
 
     private static void ParseXml(string xmlContent, Dictionary<string, string> target)
@@ -139,8 +238,61 @@ public static class LaunchpadLocale
                 continue;
             }
 
-            var value = node.InnerText ?? string.Empty;
-            target[nameAttr] = value;
+            target[nameAttr] = node.InnerText ?? string.Empty;
         }
+    }
+
+    private static void ValidateConfiguredLocale()
+    {
+        var configuredLocaleCode = NormalizeLocaleCode(_selectedLocaleConfig?.Value);
+        if (configuredLocaleCode != null && EmbeddedLocaleFiles.ContainsKey(configuredLocaleCode))
+        {
+            return;
+        }
+
+        if (_selectedLocaleConfig == null)
+        {
+            return;
+        }
+
+        _logger?.LogWarning(
+            $"Unknown Launchpad locale '{_selectedLocaleConfig.Value}'. Falling back to {DefaultLocaleCode}.");
+        _selectedLocaleConfig.Value = DefaultLocaleCode;
+    }
+
+    private static string BuildLocaleConfigDescription()
+    {
+        var availableLocales = EmbeddedLocaleFiles.Count == 0
+            ? DefaultLocaleCode
+            : string.Join(", ", EmbeddedLocaleFiles.Keys
+                .OrderBy(static code => code)
+                .Select(code => $"{code} ({GetLocaleDisplayName(code)})"));
+
+        return $"Locale XML to use for Launchpad strings. Available locales: {availableLocales}";
+    }
+
+    private static string GetLocaleDisplayName(string localeCode)
+    {
+        var normalizedLocaleCode = NormalizeLocaleCode(localeCode) ?? localeCode;
+        var languagePrefix = normalizedLocaleCode.Split('_')[0];
+
+        try
+        {
+            return CultureInfo.GetCultureInfo(languagePrefix).NativeName;
+        }
+        catch (CultureNotFoundException)
+        {
+            return languagePrefix;
+        }
+    }
+
+    private static string? NormalizeLocaleCode(string? localeCode)
+    {
+        if (string.IsNullOrWhiteSpace(localeCode))
+        {
+            return null;
+        }
+
+        return localeCode.Trim().Replace('-', '_');
     }
 }

@@ -1,4 +1,5 @@
 ﻿using LaunchpadReloaded.Features;
+using LaunchpadReloaded.Modules.Localization;
 using LaunchpadReloaded.Options.Roles.Crewmate;
 using LaunchpadReloaded.Roles.Crewmate;
 using MiraAPI.GameOptions;
@@ -11,7 +12,7 @@ namespace LaunchpadReloaded.Buttons.Crewmate;
 
 public class ZoomButton : BaseLaunchpadButton
 {
-    public override string Name => "ZOOM";
+    public override string Name => LaunchpadLocale.GetParsed("CaptainZoom");
 
     public override float Cooldown => OptionGroupSingleton<CaptainOptions>.Instance.ZoomCooldown;
 

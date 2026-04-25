@@ -5,6 +5,7 @@ using LaunchpadReloaded.Components;
 using LaunchpadReloaded.Features;
 using LaunchpadReloaded.GameOver;
 using LaunchpadReloaded.Modifiers;
+using LaunchpadReloaded.Modules.Localization;
 using LaunchpadReloaded.Options.Roles.Crewmate;
 using LaunchpadReloaded.Roles.Crewmate;
 using LaunchpadReloaded.Roles.Impostor;
@@ -59,12 +60,7 @@ public static class GenericEvents
 
         var role = @event.Player.Data.Role;
         var color = role is ICustomRole custom ? custom.RoleColor : role.TeamColor;
-        var name = role.NiceName;
-
-        if (role.IsDead && name == "STRMISS")
-        {
-            name = "Ghost";
-        }
+        var name = LaunchpadLocale.ResolveRoleDisplayName(role);
 
         var roleTag = new PlayerTag
         {

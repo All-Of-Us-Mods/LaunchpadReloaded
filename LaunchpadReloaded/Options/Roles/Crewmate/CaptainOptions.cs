@@ -1,4 +1,5 @@
-﻿using LaunchpadReloaded.Roles.Crewmate;
+﻿using LaunchpadReloaded.Modules.Localization;
+using LaunchpadReloaded.Roles.Crewmate;
 using MiraAPI.GameOptions;
 using MiraAPI.GameOptions.Attributes;
 using MiraAPI.Utilities;
@@ -7,7 +8,7 @@ namespace LaunchpadReloaded.Options.Roles.Crewmate;
 
 public class CaptainOptions : AbstractOptionGroup<CaptainRole>
 {
-    public override string GroupName => "Captain";
+    public override string GroupName => LaunchpadLocale.GetParsed("RoleCaptainName");
 
     [ModdedNumberOption("Meeting Cooldown", 0, 120, 5, MiraNumberSuffixes.Seconds)]
     public float CaptainMeetingCooldown { get; set; } = 45;

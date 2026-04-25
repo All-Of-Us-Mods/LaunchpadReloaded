@@ -33,7 +33,7 @@ public partial class LaunchpadReloadedPlugin : BasePlugin, IMiraPlugin
 
     public override void Load()
     {
-        LaunchpadLocale.Initialize();
+        LaunchpadLocale.Initialize(Config);
 
         Harmony.PatchAll();
 

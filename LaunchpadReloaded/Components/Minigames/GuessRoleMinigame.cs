@@ -1,5 +1,6 @@
 ﻿using Il2CppInterop.Runtime.Attributes;
 using LaunchpadReloaded.Features;
+using LaunchpadReloaded.Modules.Localization;
 using MiraAPI.Roles;
 using MiraAPI.Utilities;
 using MiraAPI.Utilities.Assets;
@@ -50,7 +51,7 @@ public sealed class GuessRoleMinigame(IntPtr ptr) : Minigame(ptr)
 
         var color = roleBehaviour.NameColor == Color.white ? roleBehaviour.TeamColor : roleBehaviour.NameColor;
 
-        panel.NameText.text = "<font=\"LiberationSans SDF\" material=\"LiberationSans SDF - Chat Message Masked\">" + roleBehaviour.NiceName + "</font>";
+        panel.NameText.text = "<font=\"LiberationSans SDF\" material=\"LiberationSans SDF - Chat Message Masked\">" + LaunchpadLocale.ResolveRoleDisplayName(roleBehaviour) + "</font>";
         panel.NameText.color = Color.white;
 
         panel.Background.color = color.DarkenColor(0.3f);
