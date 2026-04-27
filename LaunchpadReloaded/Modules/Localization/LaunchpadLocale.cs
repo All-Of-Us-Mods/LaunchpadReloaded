@@ -238,7 +238,7 @@ public static class LaunchpadLocale
                 continue;
             }
 
-            target[nameAttr] = node.InnerText ?? string.Empty;
+            target[nameAttr] = node.InnerXml ?? string.Empty;
         }
     }
 
