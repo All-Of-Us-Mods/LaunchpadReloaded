@@ -1,6 +1,7 @@
-﻿using System;
-using Discord;
+﻿using Discord;
 using HarmonyLib;
+using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace LaunchpadReloaded.Patches.Generic;
@@ -19,12 +20,19 @@ public static class DiscordManagerPatch
     public static bool DiscordManagerStartPrefix(DiscordManager __instance)
     {
         DiscordManager.ClientId = ClientId;
-        if (OperatingSystem.IsAndroid())
+        if (Application.platform == RuntimePlatform.Android)
         {
             return true;
         }
 
-        InitializeDiscord(__instance);
+        try
+        {
+            InitializeDiscord(__instance);
+        }
+        catch
+        {
+            // ignore
+        }
         return false;
     }
 
@@ -38,7 +46,7 @@ public static class DiscordManagerPatch
 
     private static void InitializeDiscord(DiscordManager __instance)
     {
-        __instance.presence = new Discord.Discord(ClientId, (ulong)CreateFlags.NoRequireDiscord);
+        __instance.presence = new Discord.Discord(ClientId, 1UL);
         var activityManager = __instance.presence.GetActivityManager();
 
         activityManager.RegisterSteam(SteamAppId);
